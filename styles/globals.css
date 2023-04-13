@@ -2,3 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+
+.dots {
+    @apply absolute bottom-[20px] block p-0 pl-[10px] m-0 list-none
+}
+
+.dots li {
+    @apply relative inline-block w-[15px] h-[15px] p-0 cursor-pointer
+}
+
+.dots li button {
+    @apply text-[0] leading-[0] block w-[15px] h-[15px] p-[3px] cursor-pointer 
+    text-transparent border-0 outline-none bg-transparent
+    hover:outline-none focus:outline-none
+}
+
+.dots li button:before {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    @apply font-['slick'] text-[6px] leading-[20px] absolute top-0 left-0 
+    w-[15px] h-[15px] content-['•'] text-center opacity-[.25] text-slate-200
+    hover:opacity-50 focus:opacity-50
+}
+
+.dots li.slick-active button:before {
+    @apply opacity-100 text-white
+}

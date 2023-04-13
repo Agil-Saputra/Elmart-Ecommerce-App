@@ -22,24 +22,30 @@ import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import Image from 'next/image';
 import logo from "../assets/logo.svg"
 export default function Navbar () {
-  // create an setAnchor for Popover components 
+  // create an setAnchor for Popover components so the component can be open/close and set the anchor in same time
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+  // define a state for toggling the drawer navigation on mobile view
   const [openNav, setOpenNav] = React.useState<boolean>(false)
+  // set expand state to togggling expand for categories components
   const [expand, setExpand] = React.useState<boolean>(false)
   
+  // create a function to close the popOver when popover is clicked
   const handleClose = () => {
     setAnchorEl(null);
   };
+    // create a function to close the drawer navigation whenmenu button is clicked
   const handleCloseNav = () => {
     setOpenNav(false);
   };
-
+  // set function to toggle the expand categories element
+const handleExpand = () => {
+  setExpand(!expand)
+ }
+  
+// convert anchorEl to boolean so it can be use for showing/not showing the components
 const open = Boolean(anchorEl);
 
-const handleExpand = () => {
- setExpand(!expand)
-}
-
+// make styled  components for input search component
 const Search = styled('div')(({ theme }) => ({
   position: 'relative', 
   height : '2rem',
@@ -53,7 +59,7 @@ const Search = styled('div')(({ theme }) => ({
     width: 'auto',
   },
 }));
-
+// create a wrapper icon for search icon on input component
 const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 1),
   height: '100%',
@@ -63,7 +69,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'center',
 }));
-
+// create input base using material inputbase to generate a search input for user type in.
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   '& .MuiInputBase-input': {
     paddingLeft: `calc(1em + ${theme.spacing(2.5)})`,
@@ -81,19 +87,23 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const pages = ["Products", "What's New", "Deals", "Delivery"]
 const categories = ["handphone", "laptop/computer", "TV & monitor", "Appliances", "Accesories"]
   return (
-    <AppBar className='bg-white p-2 shadow-md flex items-center flex-row justify-between gap-2'>
+    // create appbar components for wrapping all components
+    <AppBar className='bg-white p-2 shadow-md flex items-center flex-row justify-between gap-2 relative'>
+      {/* create image logo elements using next image for optimization */}
     <Image
    src={logo}
    alt='elmart logo'
    width={100}
    height={37}
    />
-
+    {/* using stack to wrap all navigation links and categories link */}
    <Stack direction='row' spacing={1} className='xmd:flex hidden '>
+    {/* special categories link that containing all categories using popover */}
     <Button className='text-black py-1 px-2 rounded-[15px] capitalize' onClick={(e) => setAnchorEl(e.currentTarget)}>
-        Categories
-        <ExpandMoreRoundedIcon/>
-      </Button>
+    Categories
+    <ExpandMoreRoundedIcon/>
+    </Button>
+    {/* create a pop over for desktop view that contained all categories */}
       <Popover
       open={open}
       anchorEl={anchorEl}
@@ -102,6 +112,7 @@ const categories = ["handphone", "laptop/computer", "TV & monitor", "Appliances"
         vertical: 'bottom',
         horizontal: 'left',
       }}>
+    {/* create a stack component to wrap button so it can be in column direction */}
         <Stack direction="column">
         {categories.map((item :string) =>  (
           <Button className='capitalize text-left block' key={item}>
@@ -110,8 +121,8 @@ const categories = ["handphone", "laptop/computer", "TV & monitor", "Appliances"
         ))}
         </Stack>
       </Popover>
-    {pages.map((menu : string) => <Button className='text-black py-1 px-2 rounded-[15px] capitalize overflow-ellipsis cursor-pointer ' href={`/${menu.toLowerCase()}`} key={menu}>{menu}</Button>)}
-         
+      {/* mapping all links with button an href link so it can be used to navigate all pages */}
+    {pages.map((menu : string) => <Button className='text-black py-1 px-2 rounded-[15px] capitalize overflow-ellipsis cursor-pointer ' href={`/${menu.toLowerCase()}`} key={menu}>{menu}</Button>)}  
 </Stack>
 
        <Stack direction='row' alignItems='center' className='md:gap-2'>
@@ -126,7 +137,7 @@ const categories = ["handphone", "laptop/computer", "TV & monitor", "Appliances"
             />
           </Search>
 
-          <IconButton >
+          <IconButton href='/cart'>
             <ShoppingCartIcon />
           </IconButton>
 
@@ -152,7 +163,7 @@ const categories = ["handphone", "laptop/computer", "TV & monitor", "Appliances"
         <>{expand ? <ExpandLess/> : <ExpandMore/>}</>
         </MenuItem>
         <Collapse in={expand}>
-         <Stack direction="column" textAlign='left'>
+         <Stack direction="column">
          {categories.map((item: string) => (
             <Button key={item} className='text-left block capitalize'>{item}</Button>
           ))}
