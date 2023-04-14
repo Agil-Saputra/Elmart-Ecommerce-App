@@ -49,7 +49,7 @@ const open = Boolean(anchorEl);
 const Search = styled('div')(({ theme }) => ({
   position: 'relative', 
   height : '2rem',
-  borderRadius: theme.shape.borderRadius,
+  borderRadius: '30px',
   border : '1px solid #BFC9D9',
   backgroundColor: 'transparent',
   marginLeft: 0,
@@ -90,12 +90,14 @@ const categories = ["handphone", "laptop/computer", "TV & monitor", "Appliances"
     // create appbar components for wrapping all components
     <AppBar className='bg-white p-2 shadow-md flex items-center flex-row justify-between gap-2 relative'>
       {/* create image logo elements using next image for optimization */}
-    <Image
+  <a href="/">
+  <Image
    src={logo}
    alt='elmart logo'
    width={100}
    height={37}
    />
+  </a>
     {/* using stack to wrap all navigation links and categories link */}
    <Stack direction='row' spacing={1} className='xmd:flex hidden '>
     {/* special categories link that containing all categories using popover */}
@@ -121,7 +123,7 @@ const categories = ["handphone", "laptop/computer", "TV & monitor", "Appliances"
         ))}
         </Stack>
       </Popover>
-      {/* mapping all links with button an href link so it can be used to navigate all pages */}
+      {/* mapping all links with button and href link so it can be used to navigate all pages */}
     {pages.map((menu : string) => <Button className='text-black py-1 px-2 rounded-[15px] capitalize overflow-ellipsis cursor-pointer ' href={`/${menu.toLowerCase()}`} key={menu}>{menu}</Button>)}  
 </Stack>
 

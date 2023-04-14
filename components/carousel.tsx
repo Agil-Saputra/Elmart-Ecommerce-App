@@ -23,15 +23,15 @@ export default function carousel (props: carouselProps) {
         'https://images.tokopedia.net/img/cache/1208/NsjrJu/2023/4/10/7093d806-1eb4-47fa-8934-bac42bd8aeda.jpg.webp?ect=4g'
       ]
   return (
-    <Slider autoplay {...settings} className='w-full mt-10 md:px-20 rounded-xl'>
+    <Slider autoplay {...settings} className='w-full mt-10 rounded-xl'>
         {urls.map((item : string) => (
-            <a key={item} href={'/'} className='rounded-xl'>
+            <a key={item} href={'/'}>
             <Image
             src={item}
             alt='banner image'
-            width={1200}
-            height={150}
-            className='w-full rounded-xl'
+            width={1684}
+            height={421}
+            className='w-full h-full rounded-xl shadow-xl'
             />
             </a>
         ))}
