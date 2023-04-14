@@ -28,3 +28,36 @@
 .dots li.slick-active button:before {
     @apply opacity-100 text-white
 }
+
+.arrow {
+    @apply relative top-[45%] cursor-pointer z-[10] rounded-[50%]
+}
+
+.arrow-left {
+    @apply left-[-20px]  absolute
+}
+
+.arrow-left-img {
+    @apply left-[5px] absolute
+}
+
+.arrow-right {
+    @apply right-[-25px] absolute
+}
+.arrow-right-img {
+    @apply right-[5px] absolute
+}
+.smooth {
+    @apply transition-all duration-[150ms] ease-in-out
+}
+
+
+  /* the slides */
+  /* .slick-slide {
+    margin: 0 17px;
+} */
+
+/* the parent
+.slick-list {
+    margin: 0 -17px;
+} */

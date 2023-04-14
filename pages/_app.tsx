@@ -9,7 +9,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const theme = createTheme({
     palette: {
       primary: {
-        main: '#409EFF',
+        main: '#39C6A5',
       },
     },
   })
