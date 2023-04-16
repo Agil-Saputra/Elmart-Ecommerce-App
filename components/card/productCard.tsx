@@ -7,7 +7,7 @@ export interface ICardProps {
 }
 export default function ProductCard (props: ICardProps) {
   return (
-     <Card className='ms:w-full shadow-none cursor-pointer p-3 hover:scale-[1.02] border-2 smooth active:scale-100'>
+     <Card className='ms:w-full shadow-none cursor-pointer p-3 hover:scale-[1.02] border-2 smooth active:scale-[1.01]'>
        <CardMedia
        image='https://images.tokopedia.net/img/cache/100-square/VqbcmM/2022/11/18/552ba719-2b32-4471-905c-88c5785f3d97.jpg.webp?ect=4g'
        className='w-full h-[180px] md:h-[200px] rounded-[2px] object-fill'
@@ -16,7 +16,7 @@ export default function ProductCard (props: ICardProps) {
         <Typography className='font-bold text-sm' color="text.secondary">
           Laptop/Computer
          </Typography>
-        <Stack direction='row' justifyContent='space-between'>
+        <Stack direction='row' justifyContent='space-between' gap={2}>
          <Typography className='font-bold text-lg text-black'>
           Macbook Air M1 
          </Typography>
