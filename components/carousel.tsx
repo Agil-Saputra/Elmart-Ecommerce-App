@@ -1,8 +1,14 @@
 import * as React from 'react';
 import Slider from "react-slick";
 import Image from 'next/image';
+import { Url } from 'url';
 
 export interface carouselProps {
+}
+
+type item =  {
+  src : string,
+  index : number
 }
 
 export default function carousel (props: carouselProps) {
@@ -24,14 +30,14 @@ export default function carousel (props: carouselProps) {
       ]
   return (
     <Slider autoplay {...settings} className='w-full mt-10 rounded-xl'>
-        {urls.map((item : string) => (
-            <a key={item} href={'/'}>
+        {urls.map((src : string, index : number) => (
+            <a key={index} href={'/'}>
             <Image
-            src={item}
+            src={src}
             alt='banner image'
             width={1684}
             height={421}
-            className='w-full h-full rounded-xl shadow-xl'
+            className='w-full h-full rounded-xl'
             />
             </a>
         ))}

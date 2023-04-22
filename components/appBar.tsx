@@ -14,6 +14,7 @@ import {
   useAutocomplete,
   OutlinedInput,
   InputAdornment,
+  Typography,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
@@ -53,45 +54,6 @@ export default function Navbar() {
   // convert anchorEl to boolean so it can be use for showing/not showing the components
   const open = Boolean(anchorEl);
 
-  // make styled  components for input search component
-  // const Search = styled("div")(({ theme }) => ({
-  //   position: "relative",
-  //   height: "2rem",
-  //   borderRadius: "30px",
-  //   border: "1px solid #BFC9D9",
-  //   backgroundColor: "transparent",
-  //   marginLeft: 0,
-  //   width: "100%",
-  //   [theme.breakpoints.up("sm")]: {
-  //     marginLeft: theme.spacing(1),
-  //     width: "auto",
-  //   },
-  // }));
-  // // create a wrapper icon for search icon on input component
-  // const SearchIconWrapper = styled("div")(({ theme }) => ({
-  //   padding: theme.spacing(0, 1),
-  //   height: "100%",
-  //   position: "absolute",
-  //   pointerEvents: "none",
-  //   display: "flex",
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  // }));
-  // create input base using material inputbase to generate a search input for user type in.
-  // const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  //   "& .MuiInputBase-input": {
-  //     paddingLeft: `calc(1em + ${theme.spacing(2.5)})`,
-  //     transition: theme.transitions.create("width"),
-  //     width: "100%",
-  //     [theme.breakpoints.up("sm")]: {
-  //       width: "20ch",
-  //       "&:focus": {
-  //         width: "30ch",
-  //       },
-  //     },
-  //   },
-  // }));
-
   const pages = ["Products", "Deals", "Delivery"];
   const categories = [
     "handphone",
@@ -101,57 +63,6 @@ export default function Navbar() {
     "Accesories",
   ];
 
-  // const options = top100Films.map((option) => {
-  // const firstLetter = option.title[0].toUpperCase();
-  //   return {
-  //     firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,
-  //     ...option,
-  //   };
-  // });
-
-  // const {
-  //   getRootProps,
-  //   getInputLabelProps,
-  //   getInputProps,
-  //   getListboxProps,
-  //   getOptionProps,
-  //   groupedOptions,
-  // } = useAutocomplete({
-  //   id: 'use-autocomplete-demo',
-  //   options: top100Films,
-  //   getOptionLabel: (option) => option.title,
-  // });
-
-  // const Listbox = styled('ul')(({ theme }) => ({
-  //   width: 200,
-  //   margin: 0,
-  //   padding: 0,
-  //   zIndex: 1,
-  //   position: 'absolute',
-  //   listStyle: 'none',
-  //   backgroundColor: theme.palette.mode === 'light' ? '#fff' : '#000',
-  //   overflow: 'auto',
-  //   maxHeight: 200,
-  //   border: '1px solid rgba(0,0,0,.25)',
-  //   '& li.Mui-focused': {
-  //     backgroundColor: '#4a8df6',
-  //     color: 'white',
-  //     cursor: 'pointer',
-  //   },
-  //   '& li:active': {
-  //     backgroundColor: '#2977f5',
-  //     color: 'white',
-  //   },
-  // }));
-
-  const options = top100Films.map((option) => {
-    const firstLetter = option.title[0].toUpperCase();
-    return {
-      firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
-      ...option,
-    };
-  });
-  
 
   return (
     // create appbar components for wrapping all components
@@ -168,12 +79,7 @@ export default function Navbar() {
           console.log(value)
         }
         freeSolo
-        disableClearable
-        options={options.sort(
-          (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
-        )}
-        groupBy={(option) => option.firstLetter}
-        getOptionLabel={(option) => option.title}
+        options={top100Films.map((option) => option.title)}
         sx={{ width: 300 }}
         renderInput={(params) => (
           <TextField
@@ -181,11 +87,10 @@ export default function Navbar() {
             {...params}
             InputProps={{
               ...params.InputProps,
-              type: 'search',
-              className: 'rounded-[30px]',
-              placeholder: "search your favorite products...",
+              size:"small",
+              placeholder: "Search Elemart products...",
               startAdornment: (
-                <InputAdornment position="start" className="ml-2 mr-0">
+                <InputAdornment position="start" className="mr-0 ml-1">
                   <SearchIcon />
                 </InputAdornment>
               ),
@@ -193,6 +98,9 @@ export default function Navbar() {
           />
         )}
       />
+
+
+      
 
 
       <Stack direction="row" alignItems="center" className="md:gap-2">

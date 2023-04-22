@@ -12,6 +12,13 @@ export default function App({ Component, pageProps }: AppProps) {
         main: '#39C6A5',
       },
     },
+    components :{
+      MuiButton: {
+        defaultProps :{
+          disableRipple : true,
+        }
+      }
+    }
   })
   return (
     <StyledEngineProvider injectFirst>

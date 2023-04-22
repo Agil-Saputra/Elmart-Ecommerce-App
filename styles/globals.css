@@ -51,6 +51,13 @@
     @apply transition-all duration-[150ms] ease-in-out
 }
 
+.main-padding{
+    @apply pl-2 sm:pl-10 lg:pl-20
+}
+.main-margin {
+    @apply ml-2 sm:ml-10 lg:ml-20
+}
+
 
   /* the slides */
   /* .slick-slide {

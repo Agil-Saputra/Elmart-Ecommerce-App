@@ -11,7 +11,7 @@ export default function banner (props: IbannerProps) {
     alt='banner image'
     width={960}
     height={120}
-    className='w-full rounded-lg my-10 shadow-xl'
+    className='w-full rounded-lg my-10 shadow-xl bg-red-400 '
     />
   );
 }
