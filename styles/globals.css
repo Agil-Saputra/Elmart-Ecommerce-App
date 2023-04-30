@@ -2,26 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
+
+.dots {
+    @apply absolute bottom-[20px] block p-0 pl-[10px] m-0 list-none
+}
+
+.dots li {
+    @apply relative inline-block w-[15px] h-[15px] p-0 cursor-pointer
+}
+
+.dots li button {
+    @apply text-[0] leading-[0] block w-[15px] h-[15px] p-[3px] cursor-pointer 
+    text-transparent border-0 outline-none bg-transparent
+    hover:outline-none focus:outline-none
+}
+
+.dots li button:before {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    @apply font-['slick'] text-[6px] leading-[20px] absolute top-0 left-0 
+    w-[15px] h-[15px] content-['•'] text-center opacity-[.25] text-slate-200
+    hover:opacity-50 focus:opacity-50
+}
+
+.dots li.slick-active button:before {
+    @apply opacity-100 text-white
+}
+
+
+
+/*create custom arrow */
+.arrow {
+    @apply relative top-[45%] cursor-pointer z-[10] rounded-[50%]
+}
+
+.arrow-left {
+    @apply left-[-20px]  absolute
+}
+
+.arrow-left-img {
+    @apply left-[5px] absolute
+}
+
+.arrow-right {
+    @apply right-[-25px] absolute
+}
+.arrow-right-img {
+    @apply right-[5px] absolute
+}
+.smooth-transition {
+    @apply transition-all duration-[150ms] ease-in-out
+}
+
+
+
+.main-padding{
+    @apply px-2 sm:px-10 lg:px-20
+}
+.main-margin-left {
+    @apply ml-2 sm:ml-10 lg:ml-20
+}
+.main-margin {
+    @apply mx-2 sm:mx-10 lg:mx-20
+}
+
