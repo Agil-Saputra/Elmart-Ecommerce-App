@@ -67,6 +67,9 @@ body {
     @apply ml-2 sm:ml-10 lg:ml-20
 }
 .main-margin {
-    @apply mx-2 sm:mx-10 lg:mx-20
+    @apply mx-2 sm:mx-10 lg:mx-20 p-[10px]
 }
 
+.handle-text-overflow{
+    @apply overflow-ellipsis overflow-hidden whitespace-pre-wrap
+}
