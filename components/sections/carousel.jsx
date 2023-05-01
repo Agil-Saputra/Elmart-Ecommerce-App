@@ -10,7 +10,7 @@ export default function carousel () {
         slidesToShow: 1,
         slidesToScroll: 1,
         arrows: false,
-        autoPlaySpeed : 400,
+        autoPlaySpeed : 300,
       };
 
       const urls = [
@@ -19,7 +19,7 @@ export default function carousel () {
         'https://images.tokopedia.net/img/cache/1208/NsjrJu/2023/4/10/7093d806-1eb4-47fa-8934-bac42bd8aeda.jpg.webp?ect=4g'
       ]
   return (
-    <Slider autoplay {...settings} className='w-full mt-24 rounded-xl main-padding'>
+    <Slider autoplay {...settings} className='w-full mt-24  main-padding '>
         {urls.map((src, index) => (
             <a key={index} href={'/'}>
             <Image
@@ -27,7 +27,7 @@ export default function carousel () {
             alt='banner image'
             width={1684}
             height={421}
-            className='w-full h-full rounded-xl'
+            className='w-full h-full rounded-[5px]'
             />
             </a>
         ))}
