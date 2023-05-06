@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // import all material UI components and function
 import {
   AppBar,
@@ -29,16 +29,18 @@ import { top100Films } from "../test";
 
 export default function Navbar() {
   // define a state for toggling the drawer navigation on mobile view
-  const [openNav, setOpenNav] = React.useState(false);
+  const [openNav, setOpenNav] = useState(false);
   // set expand state to togggling expand for categories components
-  const [expand, setExpand] = React.useState(false);
+  const [expand, setExpand] = useState(false);
+  //  set search value
+  const [value, setValue] = useState("");
 
   // set function to toggle the expand categories element
   const handleExpand = () => {
     setExpand(!expand);
   };
 
-  const pages = ["Products", "Deals", "Delivery"];
+  const pages = ["All Products"];
   const categoryLists = [
     "handphone",
     "laptop/computer",
@@ -60,11 +62,11 @@ export default function Navbar() {
 
         <Autocomplete
           id="grouped-demo"
-          onInputChange={(value) => console.log(value)}
+          onInputChange={(e, value) => setValue(value)}
           freeSolo
-          // noOptionsText='Cannot find your product'
           options={top100Films.map((option) => option.title)}
           sx={{ width: 300 }}
+          open={value?.length > 0}
           renderInput={(params) => (
             <TextField
               className="mlg:w-[30rem]"

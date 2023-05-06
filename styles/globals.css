@@ -7,57 +7,47 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* create custom dots for carousel */
 .dots {
     @apply absolute bottom-[20px] block p-0 pl-[10px] m-0 list-none
 }
-
 .dots li {
-    @apply relative inline-block w-[15px] h-[15px] p-0 cursor-pointer
+    @apply relative inline-block w-[15px] h-[15px] p-0 cursor-pointer mr-[5px]
 }
-
 .dots li button {
     @apply text-[0] leading-[0] block w-[15px] h-[15px] p-[3px] cursor-pointer 
-    text-transparent border-0 outline-none bg-transparent
-    hover:outline-none focus:outline-none
+    text-transparent outline-none 
+    hover:outline-none focus:outline-none 
 }
-
 .dots li button:before {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     @apply font-['slick'] text-[6px] leading-[20px] absolute top-0 left-0 
-    w-[15px] h-[15px] content-['•'] text-center opacity-[.25] text-slate-200
-    hover:opacity-50 focus:opacity-50
+    w-[10px] h-[10px] content-[''] text-center opacity-[.25] text-slate-200
+    hover:opacity-50 focus:opacity-50 border-[1px] rounded-[30px] bg-white border-black
 }
-
 .dots li.slick-active button:before {
     @apply opacity-100 text-white
 }
-
-
-
-/*create custom arrow */
-.arrow {
-    @apply relative top-[45%] cursor-pointer z-[10] rounded-[50%]
+.img-dots {
+    @apply block p-0 m-0 list-none rounded-lg
+}
+.img-dots li {
+    @apply relative inline-block w-auto h-[60px] mt-4 mr-2 p-0 cursor-pointer object-cover
+}
+.slick-prev.slick-disabled:before, .slick-next.slick-disabled:before {
+@apply hidden
 }
 
-.arrow-left {
-    @apply left-[-20px]  absolute
+.slick-prev {
+    @apply right-[-10px] bg-red-400
+} 
+.slick-next {
+    @apply right-[-10px] bg-red-400
 }
 
-.arrow-left-img {
-    @apply left-[5px] absolute
-}
 
-.arrow-right {
-    @apply right-[-25px] absolute
-}
-.arrow-right-img {
-    @apply right-[5px] absolute
-}
 .smooth-transition {
     @apply transition-all duration-[150ms] ease-in-out
 }
-
 
 
 .main-padding{
@@ -69,7 +59,12 @@ body {
 .main-margin {
     @apply mx-2 sm:mx-10 lg:mx-20 p-[10px]
 }
+.margin-top-global {
+    @apply md:mt-20 mt-10
+}
+
 
 .handle-text-overflow{
     @apply overflow-ellipsis overflow-hidden whitespace-pre-wrap
 }
+
