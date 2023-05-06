@@ -14,7 +14,8 @@ module.exports = {
         "xs" : '0px',
         "ms" : '305px',
         "xmd" : '860px',
-        "mlg" : '1295px'
+        "mlg" : '1295px',
+        "xlg" : '1232px',
       },
     },
   },

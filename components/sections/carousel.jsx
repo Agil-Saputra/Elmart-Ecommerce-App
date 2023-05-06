@@ -1,7 +1,7 @@
 import Slider from "react-slick";
 import Image from 'next/image';
 
-export default function carousel () {
+export default function carousel ({data}) {
     const settings = {
         dots: true,
         dotsClass: 'dots',
@@ -12,25 +12,26 @@ export default function carousel () {
         arrows: false,
         autoPlaySpeed : 300,
       };
-
-      const urls = [
-        'https://images.tokopedia.net/img/cache/1208/NsjrJu/2023/4/10/29d837ef-6d73-4278-be78-094a192eeba5.jpg.webp?ect=4g',
-        'https://images.tokopedia.net/img/cache/1208/NsjrJu/2023/4/10/d8ddb53a-71e8-4c4d-96b8-f0f32c958843.jpg.webp?ect=4g',
-        'https://images.tokopedia.net/img/cache/1208/NsjrJu/2023/4/10/7093d806-1eb4-47fa-8934-bac42bd8aeda.jpg.webp?ect=4g'
-      ]
+      
+      const carouselImages = data[0].fields.carouselBanner
   return (
-    <Slider autoplay {...settings} className='w-full mt-24  main-padding '>
-        {urls.map((src, index) => (
+    <Slider 
+    autoplay {...settings} 
+    className='w-full main-padding md:mt-24 mt-16'>
+        {carouselImages.map((item, index) => {
+          const src = item.fields.file.url
+          return  (
             <a key={index} href={'/'}>
             <Image
-            src={src}
+            src={'https:' + src}
             alt='banner image'
             width={1684}
             height={421}
             className='w-full h-full rounded-[5px]'
             />
             </a>
-        ))}
+        )
+        })}
     </Slider>
   );
 }
