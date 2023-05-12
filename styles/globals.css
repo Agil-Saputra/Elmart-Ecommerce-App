@@ -44,6 +44,25 @@ body {
     @apply right-[-10px] bg-red-400
 }
 
+/* .arrow {
+    @apply relative top-[45%] cursor-pointer z-[10] rounded-[50%] bg-red-200
+}
+
+.arrow-left {
+    @apply left-[-20px]  absolute
+}
+
+.arrow-left-img {
+    @apply left-[5px] absolute
+}
+
+.arrow-right {
+    @apply right-[-25px] absolute
+}
+.arrow-right-img {
+    @apply right-[5px] absolute
+} */
+
 
 .smooth-transition {
     @apply transition-all duration-[150ms] ease-in-out
@@ -51,16 +70,16 @@ body {
 
 
 .main-padding{
-    @apply px-2 sm:px-10 lg:px-20
+    @apply px-2 sm:px-10 lg:px-16
 }
 .main-margin-left {
-    @apply ml-2 sm:ml-10 lg:ml-20
+    @apply ml-2 sm:ml-10 lg:ml-16
 }
 .main-margin {
-    @apply mx-2 sm:mx-10 lg:mx-20 p-[10px]
+    @apply mx-2 sm:mx-10 lg:mx-16 p-[10px]
 }
 .margin-top-global {
-    @apply md:mt-20 mt-10
+    @apply md:mt-20 mt-14
 }
 
 
@@ -68,3 +87,13 @@ body {
     @apply overflow-ellipsis overflow-hidden whitespace-pre-wrap
 }
 
+
+
+.slick-slide div {
+    @apply mr-1
+}
+
+
+::placeholder {
+    @apply text-[13px] sm:text-[1rem]
+}

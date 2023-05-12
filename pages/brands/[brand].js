@@ -1,7 +1,6 @@
 import React from 'react'
 import { contentfulClient, client } from '@/cms/contentful';
 import safeJsonStringify from 'safe-json-stringify';
-import AppBarFooterLayout from '@/layout/appBar&FooterLayout';
 
 export async function getStaticPaths() {
     const brands = await contentfulClient("brand");
@@ -36,9 +35,9 @@ export async function getStaticPaths() {
 const brand = ({brand}) => {
     console.log(brand);
   return (
-   <AppBarFooterLayout>
+   <>
      <div>brand</div>
-   </AppBarFooterLayout>
+   </>
   )
 }
 

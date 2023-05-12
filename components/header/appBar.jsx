@@ -25,9 +25,11 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 // import assets for logo Image
 import Image from "next/image";
 import logo from "../../assets/logoElmart.svg";
-import { top100Films } from "../test";
+import { top100Films } from "../test/test";
+import Cart from "./cart";
+import Link from "next/link";
 
-export default function Navbar() {
+export default function Navbar({ data }) {
   // define a state for toggling the drawer navigation on mobile view
   const [openNav, setOpenNav] = useState(false);
   // set expand state to togggling expand for categories components
@@ -40,25 +42,22 @@ export default function Navbar() {
     setExpand(!expand);
   };
 
-  const pages = ["All Products"];
-  const categoryLists = [
-    "handphone",
-    "laptop/computer",
-    "TV & monitor",
-    "Appliances",
-    "Accesories",
-  ];
-
   const trigger = useScrollTrigger();
-
   return (
     <Slide appear={false} in={!trigger} direction="down">
       {/* // create appbar components for wrapping all components */}
-      <AppBar className="bg-white p-2 shadow-2xl flex items-center flex-row justify-between gap-2">
+      <AppBar className="bg-white p-2 shadow-2xl flex items-center flex-row justify-between gap-2 main-padding">
         {/* create image logo elements using next image for optimization */}
-        <a href="/">
-          <Image src={logo} alt="elmart logo" width={100} height={37} />
-        </a>
+        <Link href="/">
+          <Image
+            src={logo}
+            alt="elmart logo"
+            width={100}
+            height={37}
+            
+            className="w-auto h-auto cursor-pointer"
+          />
+        </Link>
 
         <Autocomplete
           id="grouped-demo"
@@ -74,7 +73,7 @@ export default function Navbar() {
               InputProps={{
                 ...params.InputProps,
                 size: "small",
-                placeholder: "Search Elemart products...",
+                placeholder: "Search Elmart products...",
                 startAdornment: (
                   <InputAdornment position="start" className="mr-0 ml-1">
                     <SearchIcon />
@@ -102,10 +101,14 @@ export default function Navbar() {
               }}
               title={
                 <Stack direction="column" className="bg-white">
-                  {categoryLists.map((item) => (
-                    <Button className="capitalize text-left block" key={item}>
-                      {item}
-                    </Button>
+                  {data.map((item, i) => (
+                    <Link key={i} href={"/categories/" + item.fields.slug}>
+                      <Button
+                        className="text-left block capitalize"             
+                      >
+                        {item.fields.title}
+                      </Button>
+                    </Link>
                   ))}
                 </Stack>
               }
@@ -116,35 +119,17 @@ export default function Navbar() {
               </Button>
             </Tooltip>
 
-            {/* mapping all links with button and href link so it can be used to navigate all pages */}
-            {pages.map((menu) => (
+            <Link href="/all-products">
               <Button
                 className="text-black py-1 px-2 rounded-[15px] capitalize overflow-ellipsis cursor-pointer "
-                href={`/${menu.toLowerCase()}`}
-                key={menu}
+          
               >
-                {menu}
+                All Products
               </Button>
-            ))}
+            </Link>
           </Stack>
 
-          <IconButton>
-            <Badge
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              badgeContent={1}
-              color="primary"
-              sx={{
-                "& .MuiBadge-badge": {
-                  color: "#fff",
-                },
-              }}
-            >
-              <ShoppingCartIcon />
-            </Badge>
-          </IconButton>
+          <Cart/>
 
           <IconButton
             className="flex xmd:hidden"
@@ -172,16 +157,18 @@ export default function Navbar() {
           </MenuItem>
           <Collapse in={expand}>
             <Stack direction="column">
-              {categoryLists.map((item) => (
-                <Button key={item} className="text-left block capitalize">
-                  {item}
+              {data.map((item, i) => (
+                <Button
+                  key={i}
+                  className="text-left block capitalize"
+                  href={"/categories/" + item.fields.slug}
+                >
+                  {item.fields.title}
                 </Button>
               ))}
             </Stack>
           </Collapse>
-          {pages.map((item) => (
-            <MenuItem key={item}>{item}</MenuItem>
-          ))}
+          <MenuItem ><Link href="/all-products">All Products</Link></MenuItem>
         </SwipeableDrawer>
       </AppBar>
     </Slide>

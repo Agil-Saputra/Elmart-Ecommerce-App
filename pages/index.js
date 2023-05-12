@@ -5,7 +5,6 @@ import Categories from "@/components/sections/categories";
 import SelectedProducts from "@/components/sections/selectedProducts";
 import BrandStand from "@/components/sections/brandStand";
 import {contentfulClient} from "../cms/contentful";
-import AppBarFooterLayout from "@/layout/appBar&FooterLayout";
 
 export async function getStaticProps() {
 
@@ -23,15 +22,19 @@ const bannerImages = await contentfulClient("banner")
   }
  }
 }
+
+
 export default function Home({ products, brands, categories, banner }) {
+
+
   return (
-    <AppBarFooterLayout>
+    <>
       <Carousel data={banner}/>
       <Trending data={products}/>
       <Banner data={banner}/>
       <Categories data={categories}/>
       <SelectedProducts data={products}/>
       <BrandStand data={brands} />
-    </AppBarFooterLayout>
+    </>
   );
 }

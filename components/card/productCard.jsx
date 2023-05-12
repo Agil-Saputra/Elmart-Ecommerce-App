@@ -7,7 +7,6 @@ import {
   Stack,
   Button,
 } from "@mui/material";
-import AddShoppingCartRoundedIcon from "@mui/icons-material/AddShoppingCartRounded";
 import Link from "next/link";
 
 export default function ProductCard({
@@ -17,10 +16,11 @@ export default function ProductCard({
   desc,
   image,
   slug,
+  data,
 }) {
   return title ? (
-    <Card className="ms:w-full shadow-none cursor-pointer p-1 hover:scale-[1.02] border-[1px] smooth-transition active:scale-[1.01] ">
-      <Link href={"/" + slug}>
+    <Link href={"/" + slug}>
+      <Card className="ms:w-full shadow-none cursor-pointer p-1 hover:scale-[1.02] border-[1px] smooth-transition active:scale-[1.01] ">
         <CardMedia
           image={"https:" + image}
           className="w-full h-[180px] md:h-[200px] rounded-[2px] object-fill"
@@ -44,15 +44,7 @@ export default function ProductCard({
             {desc}
           </Typography>
         </CardContent>
-      </Link>
-      <Button
-        startIcon={<AddShoppingCartRoundedIcon />}
-        fullWidth
-        variant="contained"
-        className="bg-primary shadow-md text-white text-[10px] md:text-[12px]"
-      >
-        Add to cart
-      </Button>
-    </Card>
+      </Card>
+    </Link>
   ) : null;
 }
