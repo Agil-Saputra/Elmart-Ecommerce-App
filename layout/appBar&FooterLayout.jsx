@@ -9,7 +9,6 @@ const appBarFooterLayout = ({children, data}) => {
     <>
         <Navbar data={data}/>
         {children}
-        <p>{data}</p>
         <ScrollTopButton/>
         <Footer/>
     </>

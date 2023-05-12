@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 import { contentfulClient, client } from "@/cms/contentful";
 import safeJsonStringify from "safe-json-stringify";
-import AppBarFooterLayout from "@/layout/appBar&FooterLayout";
 import ProductCard from "@/components/card/productCard";
 
 export async function getStaticPaths() {
@@ -38,7 +37,7 @@ const categories = ({ category }) => {
   console.log(category);
   const { categoryBanner, product } = category.fields;
   return (
-    <AppBarFooterLayout>
+    <>
       <Image
         priority
         src={"https:" + categoryBanner.fields.file.url}
@@ -69,7 +68,7 @@ const categories = ({ category }) => {
           </div>
         </div>
       </main>
-    </AppBarFooterLayout>
+    </>
   );
 };
 

@@ -1,13 +1,16 @@
 import React from "react";
 import { IconButton } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
+import Link from "next/link";
 
 const backToHomeButton = () => {
   return (
-    <IconButton href="/" className="rounded-[5px] mb-10">
-      <ArrowBack />
-      <h2 className="capitalize">Continue to Shopping</h2>
-    </IconButton>
+    <Link href="/">
+      <IconButton className="rounded-[5px] mb-8 mt-4">
+        <ArrowBack />
+        <h2 className="capitalize max-md:text-[16px]">Continue to Shopping</h2>
+      </IconButton>
+    </Link>
   );
 };
 

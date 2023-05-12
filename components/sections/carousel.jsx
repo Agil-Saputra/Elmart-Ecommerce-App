@@ -19,12 +19,13 @@ export default function carousel ({data}) {
     autoplay {...settings} 
     className='w-full main-padding md:mt-24 mt-16'>
         {carouselImages.map((item, index) => {
-          const src = item.fields.file.url
+          const image = item.fields
           return  (
             <a key={index} href={'/'}>
             <Image
-            src={'https:' + src}
-            alt='banner image'
+            src={'https:' + image.file.url}
+            alt={image.title}
+            priority
             width={1684}
             height={421}
             className='w-full h-full rounded-[5px]'

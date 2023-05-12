@@ -60,8 +60,8 @@ export default function footer() {
             width={100}
             height={30}
             src={logo}
-            alt="logo"
-            className="bg-white rounded-lg"
+            alt="elmart logo"
+            className="bg-white rounded-lg w-auto h-auto"
           />
           <p className="max-w-[20ch] my-4">
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vitae
