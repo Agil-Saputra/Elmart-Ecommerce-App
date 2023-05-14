@@ -32,7 +32,7 @@ export async function getStaticPaths() {
   }
   
 
-const brand = ({brand}) => {
+const Brand = ({brand}) => {
     console.log(brand);
   return (
    <>
@@ -41,4 +41,4 @@ const brand = ({brand}) => {
   )
 }
 
-export default brand
+export default Brand

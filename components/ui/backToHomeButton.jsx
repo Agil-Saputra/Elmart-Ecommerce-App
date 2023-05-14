@@ -3,7 +3,7 @@ import { IconButton } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
 import Link from "next/link";
 
-const backToHomeButton = () => {
+const BackToHomeButton = () => {
   return (
     <Link href="/">
       <IconButton className="rounded-[5px] mb-8 mt-4">
@@ -14,4 +14,4 @@ const backToHomeButton = () => {
   );
 };
 
-export default backToHomeButton;
+export default BackToHomeButton;

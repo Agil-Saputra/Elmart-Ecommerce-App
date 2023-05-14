@@ -1,7 +1,7 @@
 import { useScrollTrigger, Fab, Zoom } from "@mui/material";
 import { KeyboardArrowUp } from "@mui/icons-material";
 
-const scrollTopButton = () => {
+const ScrollTopButton = () => {
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 50,
@@ -29,4 +29,4 @@ const scrollTopButton = () => {
   );
 };
 
-export default scrollTopButton;
+export default ScrollTopButton;

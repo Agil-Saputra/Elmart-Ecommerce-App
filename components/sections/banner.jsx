@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function banner({ data }) {
+export default function Banner({ data }) {
   return (
     <Image
       src={"https:" + data[0].fields.bottomBanner.fields.file.url}

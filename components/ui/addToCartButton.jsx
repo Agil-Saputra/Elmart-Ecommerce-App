@@ -3,7 +3,7 @@ import { Button } from '@mui/material'
 import { AddShoppingCartRounded } from '@mui/icons-material'
 import { cartState } from '@/context/cartProvider'
 
-const addToCartButton = ({data, amount, variant, added}) => {
+const AddToCartButton = ({data, amount, variant, added}) => {
     const {
         state : { cart },
         dispatch
@@ -34,9 +34,10 @@ const addToCartButton = ({data, amount, variant, added}) => {
         variant="contained"
         className="bg-primary shadow-md text-white text-[10px] md:text-[12px]"
       >
-       {added ?  'Added to cart' : 'Add to cart'}
+       {/* {added ?  'Added to cart' : 'Add to cart'} */}
+       Add to cart
       </Button>
   )
 }
 
-export default addToCartButton
+export default AddToCartButton

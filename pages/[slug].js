@@ -53,7 +53,7 @@ export async function getStaticProps({ params }) {
   };
 }
 
-const product = ({ product, relateProducts }) => {
+const Product = ({ product, relateProducts }) => {
   const { title, description, price, productImages, variants, slug } =
     product.fields;
   const [variantValue, setVariantValue] = useState(variants[0]);
@@ -82,8 +82,7 @@ const product = ({ product, relateProducts }) => {
   const {
     state: { cart },
   } = cartState();
-  const checkAdded = cart.some(p => p.slug == slug)
-
+  const checkAdded = cart.some((p) => p.slug == slug);
 
   const [count, setCount] = useState(1);
 
@@ -129,7 +128,9 @@ const product = ({ product, relateProducts }) => {
                   color="primary"
                   value={variantValue}
                   exclusive
-                  onChange={(e, value) => setVariantValue(value)}
+                  onChange={(e, value) => {
+                      setVariantValue(value);
+                  }}
                   className="grid grid-cols-2 gap-2"
                   sx={{
                     "& .MuiToggleButtonGroup-grouped:not(:first-of-type)": {
@@ -152,10 +153,13 @@ const product = ({ product, relateProducts }) => {
             </div>
           </div>
 
-            
-           <NoSsr>
-             
-              <div className={(checkAdded ? "pointer-events-none opacity-50" : "pointer-events-auto opacity-100" ) +  " border-2 shadow-md rounded-[5px] p-2 xlg:w-[20%] w-full h-fit"}>
+          <NoSsr>
+            {/* (checkAdded ? "pointer-events-none opacity-50" : "pointer-events-auto opacity-100" ) +   */}
+            <div
+              className={
+                " border-2 shadow-md rounded-[5px] p-2 xlg:w-[20%] w-full h-fit"
+              }
+            >
               <p className="text-xl font-bold">Checkout</p>
               <div className="flex justify-between gap-4 items-center my-2">
                 <p className="font-bold text-[14px]">Amount:{count}</p>
@@ -185,10 +189,10 @@ const product = ({ product, relateProducts }) => {
                 data={product.fields}
                 amount={count}
                 variant={variantValue}
-                added={checkAdded}
+                // added={checkAdded}
               />
             </div>
-           </NoSsr>
+          </NoSsr>
         </div>
       </main>
       <Divider variant="fullWidth" className="mb-6 divide-dashed" />
@@ -196,4 +200,4 @@ const product = ({ product, relateProducts }) => {
   );
 };
 
-export default product;
+export default Product;
