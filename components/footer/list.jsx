@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import * as React from "react";
 
-export default function list({ menus, title }) {
+export default function List({ menus, title }) {
   return (
     <div>
       <Typography className="font-bold text-lg">{title}</Typography>

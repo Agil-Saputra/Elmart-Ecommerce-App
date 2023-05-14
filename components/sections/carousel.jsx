@@ -1,7 +1,7 @@
 import Slider from "react-slick";
 import Image from 'next/image';
 
-export default function carousel ({data}) {
+export default function Carousel ({data}) {
     const settings = {
         dots: true,
         dotsClass: 'dots',

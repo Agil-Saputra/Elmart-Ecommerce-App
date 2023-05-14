@@ -33,8 +33,7 @@ export async function getStaticProps({ params }) {
   };
 }
 
-const categories = ({ category }) => {
-  console.log(category);
+const Categories = ({ category }) => {
   const { categoryBanner, product } = category.fields;
   return (
     <>
@@ -72,4 +71,4 @@ const categories = ({ category }) => {
   );
 };
 
-export default categories;
+export default Categories;

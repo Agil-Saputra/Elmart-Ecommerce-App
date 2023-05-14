@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   images : {
     domains : ['images.tokopedia.net', 'images.ctfassets.net', 'i.ibb.co']
   }

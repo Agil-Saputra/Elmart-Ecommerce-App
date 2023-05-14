@@ -10,7 +10,7 @@ import mastercard from "../../assets/payment/mastercard.svg";
 import paypal from "../../assets/payment/paypal.svg";
 import visa from "../../assets/payment/visa.svg";
 
-export default function footer() {
+export default function Footer() {
   const about = [
     "About Elmart",
     "Careers",
