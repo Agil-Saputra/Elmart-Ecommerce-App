@@ -1,7 +1,7 @@
 import React from "react";
 import { IconButton, Badge, Tooltip, Avatar, Divider, NoSsr } from "@mui/material";
 import { ShoppingCart } from "@mui/icons-material";
-import { cartState } from "@/context/cartProvider";
+import { cartState } from "@/context/Provider";
 import Link from "next/link";
 import Image from "next/image";
 import emptycart from "../../assets/emptyCart.svg";
@@ -43,7 +43,7 @@ const Cart = () => {
             </p>
             <p className="text-black text-left">
               Instead of being idle, just fill it with interesting stuff. Have a
-              look, who knows there's something you like!
+              look, who knows there&apos;s something you like!
             </p>
           </div>
         ) : (
