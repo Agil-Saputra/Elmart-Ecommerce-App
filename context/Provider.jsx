@@ -1,16 +1,17 @@
-import { useContext, useReducer, useState } from 'react'
+import { useContext, useReducer, } from 'react'
 import { createContext } from 'react'
-import { cartReducer } from './cartReducer'
+import { cartReducer } from './Reducer'
 import { useEffect } from 'react'
 import useLocalStorage from '@/hooks/useLocalStorage'
 
-const Cart = createContext()
+const Context = createContext()
 
-const CartProvider = ({children}) => {
+const Provider = ({children}) => {
 
   const [value, setValue] = useLocalStorage("cart", [])
   const INITIAL_STATE = {
-    cart : value || []
+    cart : value || [],
+    searchQuery: ""
   }
 
   const [state, dispatch] = useReducer(cartReducer, INITIAL_STATE)
@@ -23,14 +24,14 @@ const CartProvider = ({children}) => {
       localStorage.setItem("cart", JSON.stringify(state.cart))
   }, [state.cart]);
   return (
-    <Cart.Provider value={{state, dispatch}}>
+    <Context.Provider value={{state, dispatch}}>
     {children}
-    </Cart.Provider>
+    </Context.Provider>
   )
 }
 
 export const cartState  = () => {
-  return useContext(Cart)
+  return useContext(Context)
 }
 
-export default CartProvider
+export default Provider

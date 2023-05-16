@@ -1,6 +1,6 @@
 import React from "react";
 import { NoSsr, Divider, Button, ButtonGroup } from "@mui/material";
-import { cartState } from "@/context/cartProvider";
+import { cartState } from "@/context/Provider";
 import Image from "next/image";
 import RemoveFromCartButton from "@/components/ui/removeFromCartButton";
 import Link from "next/link";
