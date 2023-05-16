@@ -7,7 +7,7 @@ import AppBarFooterLayout from "@/layout/appBar&FooterLayout";
 import App from "next/app";
 import { createClient } from "contentful";
 import safeJsonStringify from "safe-json-stringify"
-import CartProvider from "@/context/cartProvider";
+import CartProvider from "@/context/Provider";
 
 export default function MyApp({ Component, pageProps, categoryData }) {
   const theme = createTheme({

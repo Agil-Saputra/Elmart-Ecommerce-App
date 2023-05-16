@@ -49,6 +49,13 @@ export const cartReducer = (state, action) => {
         })
         return { ...state, cart: [...state.cart] };
     };
+ 
+    case "SET_QUERY" : {
+      return {
+        ...state,
+        searchQuery: action.payload
+      };
+    }
 
 
     

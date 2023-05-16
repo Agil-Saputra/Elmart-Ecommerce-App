@@ -14,7 +14,7 @@ import Image from "next/image";
 import Slider from "react-slick";
 import BackToHomeButton from "@/components/ui/backToHomeButton";
 import AddToCartButton from "@/components/ui/addToCartButton";
-import { cartState } from "@/context/cartProvider";
+import { cartState } from "@/context/Provider";
 
 export async function getStaticPaths() {
   const product = await contentfulClient("product");
@@ -61,8 +61,10 @@ const Product = ({ product, relateProducts }) => {
     customPaging: function (i) {
       return (
         <a>
-          <img
+          <Image
             src={"https:" + productImages[i].fields.file.url}
+            width={100}
+            height={100}
             className="h-full w-auto rounded-[5px]"
             alt={productImages[i].fields.title}
           />

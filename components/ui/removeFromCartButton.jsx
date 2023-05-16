@@ -1,6 +1,6 @@
 import { IconButton } from '@mui/material'
 import React from 'react'
-import { cartState } from '@/context/cartProvider'
+import { cartState } from '@/context/Provider'
 import { Delete } from '@mui/icons-material'
 
 const RemoveFromCartButton = ({slug, variant}) => {

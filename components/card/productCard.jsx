@@ -20,17 +20,17 @@ export default function ProductCard({
 }) {
   return title ? (
     <Link href={"/" + slug}>
-      <Card className="ms:w-full shadow-none cursor-pointer p-1 hover:scale-[1.02] border-[1px] smooth-transition active:scale-[1.01] ">
+      <Card className="ms:w-full shadow-none cursor-pointer p-1 hover:scale-[1.02] border-[1px] smooth-transition active:scale-[1.01] hover:text-primary">
         <CardMedia
           image={"https:" + image}
           className="w-full h-[180px] md:h-[200px] rounded-[2px] object-fill"
         />
         <CardContent className="p-1 last:pb-0">
-          <Typography className="font-bold text-sm" color="text.secondary">
+          <Typography className="font-bold text-sm handle-text-overflow line-clamp-1" color="text.secondary">
             {category}
           </Typography>
           <Stack direction="row" justifyContent="space-between" gap={2}>
-            <Typography className="font-bold text-lg text-black  handle-text-overflow line-clamp-1">
+            <Typography className="font-bold text-lg handle-text-overflow line-clamp-1">
               {title}
             </Typography>
             <Typography className="font-bold text-xl text-black">

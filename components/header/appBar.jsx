@@ -28,6 +28,8 @@ import logo from "../../assets/logoElmart.svg";
 import { top100Films } from "../test/test";
 import Cart from "./cart";
 import Link from "next/link";
+import { cartState } from "@/context/Provider";
+import { useRouter } from "next/router";
 
 export default function Navbar({ data }) {
   // define a state for toggling the drawer navigation on mobile view
@@ -35,11 +37,21 @@ export default function Navbar({ data }) {
   // set expand state to togggling expand for categories components
   const [expand, setExpand] = useState(false);
   //  set search value
-  const [value, setValue] = useState("");
+  const router = useRouter();
+
+  const {
+    state: { searchQuery },
+    dispatch,
+  } = cartState();
 
   // set function to toggle the expand categories element
   const handleExpand = () => {
     setExpand(!expand);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    router.push("/all-products");
   };
 
   const trigger = useScrollTrigger();
@@ -54,33 +66,38 @@ export default function Navbar({ data }) {
             alt="elmart logo"
             width={100}
             height={37}
-            
-            className="w-auto h-auto cursor-pointer"
+            className="w-auto h-auto cursor-pointer max-[335px]:hidden"
           />
         </Link>
 
         <Autocomplete
-          id="grouped-demo"
-          onInputChange={(e, value) => setValue(value)}
+          onChange={handleSubmit}
+          onInputChange={(e, value) => {
+            dispatch({
+              type: "SET_QUERY",
+              payload: value,
+            });
+          }}
           freeSolo
           options={top100Films.map((option) => option.title)}
           sx={{ width: 300 }}
-          open={value?.length > 0}
           renderInput={(params) => (
-            <TextField
-              className="mlg:w-[30rem]"
-              {...params}
-              InputProps={{
-                ...params.InputProps,
-                size: "small",
-                placeholder: "Search Elmart products...",
-                startAdornment: (
-                  <InputAdornment position="start" className="mr-0 ml-1">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
+            <form onSubmit={handleSubmit}>
+              <TextField
+                className="mlg:w-[30rem]"
+                {...params}
+                InputProps={{
+                  ...params.InputProps,
+                  size: "small",
+                  placeholder: "Search Elmart products...",
+                  startAdornment: (
+                    <InputAdornment position="start" className="mr-0 ml-1">
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </form>
           )}
         />
 
@@ -103,9 +120,7 @@ export default function Navbar({ data }) {
                 <Stack direction="column" className="bg-white">
                   {data.map((item, i) => (
                     <Link key={i} href={"/categories/" + item.fields.slug}>
-                      <Button
-                        className="text-left block capitalize"             
-                      >
+                      <Button className="text-left block capitalize">
                         {item.fields.title}
                       </Button>
                     </Link>
@@ -120,16 +135,13 @@ export default function Navbar({ data }) {
             </Tooltip>
 
             <Link href="/all-products">
-              <Button
-                className="text-black py-1 px-2 rounded-[15px] capitalize overflow-ellipsis cursor-pointer "
-          
-              >
+              <Button className="text-black py-1 px-2 rounded-[15px] capitalize overflow-ellipsis cursor-pointer ">
                 All Products
               </Button>
             </Link>
           </Stack>
 
-          <Cart/>
+          <Cart />
 
           <IconButton
             className="flex xmd:hidden"
@@ -168,7 +180,9 @@ export default function Navbar({ data }) {
               ))}
             </Stack>
           </Collapse>
-          <MenuItem ><Link href="/all-products">All Products</Link></MenuItem>
+          <MenuItem>
+            <Link href="/all-products">All Products</Link>
+          </MenuItem>
         </SwipeableDrawer>
       </AppBar>
     </Slide>
