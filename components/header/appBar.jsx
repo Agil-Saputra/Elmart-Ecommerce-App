@@ -14,52 +14,74 @@ import {
   Tooltip,
   useScrollTrigger,
   Slide,
-  Badge,
+  createFilterOptions,
+  ListItem,
+  Avatar
 } from "@mui/material";
 // import all icons from material icons
 import SearchIcon from "@mui/icons-material/Search";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
 import MenuIcon from "@mui/icons-material/Menu";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 // import assets for logo Image
 import Image from "next/image";
 import logo from "../../assets/logoElmart.svg";
-import { top100Films } from "../test/test";
 import Cart from "./cart";
 import Link from "next/link";
 import { cartState } from "@/context/Provider";
 import { useRouter } from "next/router";
 
-export default function Navbar({ data }) {
+export default function Navbar({ category, products }) {
   // define a state for toggling the drawer navigation on mobile view
   const [openNav, setOpenNav] = useState(false);
   // set expand state to togggling expand for categories components
   const [expand, setExpand] = useState(false);
-  //  set search value
+  const [open, setOpen] = useState(false);
   const router = useRouter();
-
   const {
     state: { searchQuery },
     dispatch,
   } = cartState();
+
+  function handleOpen() {
+    if (searchQuery.length > 0) {
+      setOpen(true);
+    }
+  }
+
+  function handleInputChange(e, value) {
+    dispatch({
+      type: "SET_QUERY",
+      payload: value,
+    });
+    if (searchQuery.length > 0) {
+      setOpen(true);
+    } else {
+      setOpen(false);
+    }
+  }
 
   // set function to toggle the expand categories element
   const handleExpand = () => {
     setExpand(!expand);
   };
 
+  console.log(category);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     router.push("/all-products");
   };
 
+  const OPTIONS_LIMIT = 4;
+  const filterOptions = createFilterOptions({
+    limit: OPTIONS_LIMIT,
+  });
+
   const trigger = useScrollTrigger();
   return (
     <Slide appear={false} in={!trigger} direction="down">
-      {/* // create appbar components for wrapping all components */}
       <AppBar className="bg-white p-2 shadow-2xl flex items-center flex-row justify-between gap-2 main-padding">
-        {/* create image logo elements using next image for optimization */}
         <Link href="/">
           <Image
             src={logo}
@@ -72,14 +94,13 @@ export default function Navbar({ data }) {
 
         <Autocomplete
           onChange={handleSubmit}
-          onInputChange={(e, value) => {
-            dispatch({
-              type: "SET_QUERY",
-              payload: value,
-            });
-          }}
+          filterOptions={filterOptions}
+          onInputChange={handleInputChange}
+          onClose={() => setOpen(false)}
+          onOpen={handleOpen}
+          open={open}
           freeSolo
-          options={top100Films.map((option) => option.title)}
+          options={products.map((option) => option.fields.title)}
           sx={{ width: 300 }}
           renderInput={(params) => (
             <form onSubmit={handleSubmit}>
@@ -117,14 +138,18 @@ export default function Navbar({ data }) {
                 },
               }}
               title={
-                <Stack direction="column" className="bg-white">
-                  {data.map((item, i) => (
-                    <Link key={i} href={"/categories/" + item.fields.slug}>
+                <Stack className="bg-white grid grid-cols-2">
+                  {category.map((item, i) => {
+                    const {title, slug, categoryImage} = item.fields
+                    return (
+                      <Link key={i} href={"/categories/" + slug} className="flex items-center gap-1">
+                    <Avatar src={"https://" + categoryImage.fields.file.url}/>
                       <Button className="text-left block capitalize">
-                        {item.fields.title}
+                        {title}
                       </Button>
                     </Link>
-                  ))}
+                    )
+                  })}
                 </Stack>
               }
             >
@@ -169,7 +194,7 @@ export default function Navbar({ data }) {
           </MenuItem>
           <Collapse in={expand}>
             <Stack direction="column">
-              {data.map((item, i) => (
+              {category.map((item, i) => (
                 <Button
                   key={i}
                   className="text-left block capitalize"
