@@ -17,7 +17,7 @@ git clone <repository-url>
 cd elemart
 ```
 
-    3.
+    3.install NPM
 
 ```bash
  npm install
@@ -27,7 +27,7 @@ yarn install
 pnpm install
 ```
 
-     4.
+     4.Run development Server
 
 ```bash
  npm run dev
