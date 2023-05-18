@@ -19,8 +19,8 @@ const AllProducts = ({ products }) => {
   function filtered(arr) {
     return arr.filter(
       (item) =>
-        item.fields.title.toLowerCase().includes(searchQuery) ||
-        item.fields.description.toLowerCase().includes(searchQuery)
+        item.fields.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.fields.description.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }
 
@@ -30,15 +30,16 @@ const AllProducts = ({ products }) => {
       {filteredProducts[0]
        ? ( <div className="gap-2 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
           {filteredProducts.map((item) => {
+            const {slug, title, price, description, categoryref, productImages} = item.fields
             return (
               <ProductCard
-                key={item.fields.slug}
-                title={item.fields.title}
-                slug={item.fields.slug}
-                price={item.fields.price}
-                desc={item.fields.description}
-                category={item.fields.categoryref[0].fields.title}
-                image={item.fields.productImages[0].fields.file.url}
+                key={slug}
+                title={title}
+                slug={slug}
+                price={price}
+                desc={description}
+                category={categoryref[0].fields.title}
+                image={productImages[0].fields.file.url}
               />
             );
           })}

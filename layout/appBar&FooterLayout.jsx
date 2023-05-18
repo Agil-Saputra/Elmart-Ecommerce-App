@@ -4,10 +4,10 @@ import Footer from '@/components/footer/footer'
 import ScrollTopButton from '@/components/ui/scrollTopButton'
 
 
-const appBarFooterLayout = ({children, data}) => {
+const appBarFooterLayout = ({children, category, products}) => {
   return (
     <>
-        <Navbar data={data}/>
+        <Navbar category={category} products={products}/>
         {children}
         <ScrollTopButton/>
         <Footer/>

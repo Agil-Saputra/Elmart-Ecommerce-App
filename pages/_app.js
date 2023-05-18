@@ -9,7 +9,7 @@ import { createClient } from "contentful";
 import safeJsonStringify from "safe-json-stringify"
 import CartProvider from "@/context/Provider";
 
-export default function MyApp({ Component, pageProps, categoryData }) {
+export default function MyApp({ Component, pageProps, categoryData, productsData }) {
   const theme = createTheme({
     palette: {
       primary: {
@@ -29,7 +29,7 @@ export default function MyApp({ Component, pageProps, categoryData }) {
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
         <CartProvider>
-          <AppBarFooterLayout data={categoryData}>
+          <AppBarFooterLayout category={categoryData} products={productsData}>
             <Component {...pageProps} />
           </AppBarFooterLayout>
         </CartProvider>
@@ -46,9 +46,14 @@ MyApp.getInitialProps = async (context) => {
     accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN,
   });
 
-  let Response = await client.getEntries({ content_type: "category" });
-  Response = safeJsonStringify(Response);
-  const data = JSON.parse(Response);
+  let categoryResponse = await client.getEntries({ content_type: "category" });
+  categoryResponse = safeJsonStringify(categoryResponse);
+  const categoryData = JSON.parse(categoryResponse);
+  
+  let productResponse = await client.getEntries({content_type : "product"})
+  productResponse = safeJsonStringify(productResponse);
+  const productData = JSON.parse(productResponse);
+  
 
-  return { ...ctx, categoryData: data.items };
+  return { ...ctx, categoryData: categoryData.items, productsData: productData.items };
 };
