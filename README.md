@@ -1,6 +1,6 @@
 # Elemart-Ecommerce-App
 
-Elemart is an electronics online store built with Next.js, a React framework for building modern web applications. The project utilizes Strapi, a headless CMS (Content Management System), to manage the content and product information, while Stripe, a popular payment gateway, is integrated for secure and seamless online transactions.
+Elemart is an electronics online store built with Next.js, a React framework for building modern web applications. The project utilizes Contentful, a headless CMS (Content Management System), to manage the content and product information, while Stripe, a popular payment gateway, is integrated for secure and seamless online transactions.
 
 ## Installation
 
