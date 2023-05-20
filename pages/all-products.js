@@ -20,11 +20,15 @@ const AllProducts = ({ products }) => {
     return arr.filter(
       (item) =>
         item.fields.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.fields.description.toLowerCase().includes(searchQuery.toLowerCase())
+        item.fields.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.fields.categoryref[0].fields.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }
 
-  const filteredProducts = filtered(products);
+  const filteredProducts = filtered(products)
+
+  console.log(filteredProducts.map(item => item.fields.title).sort());
+
   return (
     <div className="margin-top-global main-margin">
       {filteredProducts[0]
@@ -42,7 +46,7 @@ const AllProducts = ({ products }) => {
                 image={productImages[0].fields.file.url}
               />
             );
-          })}
+          }).sort()}
         </div>
       ) : (
         <div>sorry we couldnt find your product, try another keyword</div>

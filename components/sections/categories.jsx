@@ -1,28 +1,31 @@
 import Slider from "react-slick";
 import CategoryCard from "../card/categoryCard";
+import { NextArrow, PrevArrow } from "../ui/sliderArrows/Arrows";
 
 export default function FeaturedCategories({ data }) {
   const settings = {
     dots: false,
     infinite: false,
-    speed: 600,
+    speed: 1000,
     slidesToShow: 5,
-    slidesToScroll: 5,
+    slidesToScroll: 3,
     arrows: true,
     autoPlaySpeed: 300,
+    nextArrow : <NextArrow/>,
+    prevArrow  : <PrevArrow/>,
     responsive: [
       {
         breakpoint: 863,
         settings: {
           slidesToShow: 4,
-          slidesToScroll: 4,
+          slidesToScroll: 3,
         },
       },
       {
         breakpoint: 711,
         settings: {
           slidesToShow: 3,
-          slidesToScroll: 3,
+          slidesToScroll: 2,
         },
       },
       {
@@ -41,7 +44,6 @@ export default function FeaturedCategories({ data }) {
       </p>
 
       <Slider {...settings} className="pl-1">
- 
         {data.map((item) => {
           const { title, categoryImage, slug } = item.fields;
           return (
@@ -53,61 +55,7 @@ export default function FeaturedCategories({ data }) {
               />
           );
         })}
-        
        
-        {data.map((item) => {
-          const { title, categoryImage, slug } = item.fields;
-          return (
-              <CategoryCard
-              key={title}
-                title={title}
-                image={categoryImage.fields.file.url}
-                slug={slug}
-              />
-          );
-        })}
-        
-       
-        {data.map((item) => {
-          const { title, categoryImage, slug } = item.fields;
-          return (
-              <CategoryCard
-              key={title}
-                title={title}
-                image={categoryImage.fields.file.url}
-                slug={slug}
-              />
-          );
-        })}
-        
-       
-        {data.map((item) => {
-          const { title, categoryImage, slug } = item.fields;
-          return (
-              <CategoryCard
-              key={title}
-                title={title}
-                image={categoryImage.fields.file.url}
-                slug={slug}
-              />
-          );
-        })}
-        
-       
-        {data.map((item) => {
-          const { title, categoryImage, slug } = item.fields;
-          return (
-              <CategoryCard
-              key={title}
-                title={title}
-                image={categoryImage.fields.file.url}
-                slug={slug}
-              />
-          );
-        })}
-        
-       
-        
       </Slider>
     </section>
   );
