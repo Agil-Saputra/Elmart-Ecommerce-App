@@ -66,8 +66,6 @@ export default function Navbar({ category, products }) {
     setExpand(!expand);
   };
 
-  console.log(category);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     router.push("/all-products");
@@ -138,13 +136,13 @@ export default function Navbar({ category, products }) {
                 },
               }}
               title={
-                <Stack className="bg-white grid grid-cols-2">
+                <Stack className="bg-white grid grid-cols-2 gap-1">
                   {category.map((item, i) => {
                     const {title, slug, categoryImage} = item.fields
                     return (
-                      <Link key={i} href={"/categories/" + slug} className="flex items-center gap-1">
-                    <Avatar src={"https://" + categoryImage.fields.file.url}/>
-                      <Button className="text-left block capitalize">
+                      <Link key={i} href={"/categories/" + slug} className="flex items-center gap-2">
+                    <Avatar src={"https://" + categoryImage.fields.file.url} className="border-[1px]"/>
+                      <Button className="text-left block capitalize leading-[1rem]">
                         {title}
                       </Button>
                     </Link>

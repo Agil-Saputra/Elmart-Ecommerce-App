@@ -12,7 +12,7 @@ body {
     @apply absolute bottom-[20px] block p-0 pl-[10px] m-0 list-none
 }
 .dots li {
-    @apply relative inline-block w-[15px] h-[15px] p-0 cursor-pointer mr-[5px]
+    @apply relative inline-block w-[15px] h-[15px] p-0 cursor-pointer mr-[2px]
 }
 .dots li button {
     @apply text-[0] leading-[0] block w-[15px] h-[15px] p-[3px] cursor-pointer 
@@ -33,39 +33,9 @@ body {
 .img-dots li {
     @apply relative inline-block w-auto h-[60px] mt-4 mr-2 p-0 cursor-pointer object-cover
 }
-.slick-prev.slick-disabled:before, .slick-next.slick-disabled:before {
-@apply hidden
-}
-
-.slick-prev {
-    @apply right-[-10px] bg-red-400
-} 
-.slick-next {
-    @apply right-[-10px] bg-red-400
-}
-
-/* .arrow {
-    @apply relative top-[45%] cursor-pointer z-[10] rounded-[50%] bg-red-200
-}
-
-.arrow-left {
-    @apply left-[-20px]  absolute
-}
-
-.arrow-left-img {
-    @apply left-[5px] absolute
-}
-
-.arrow-right {
-    @apply right-[-25px] absolute
-}
-.arrow-right-img {
-    @apply right-[5px] absolute
-} */
-
 
 .smooth-transition {
-    @apply transition-all duration-[150ms] ease-in-out
+    @apply transition-all duration-[250ms] ease-in-out
 }
 
 
@@ -81,19 +51,26 @@ body {
 .margin-top-global {
     @apply md:mt-20 mt-14
 }
-
-
 .handle-text-overflow{
     @apply overflow-ellipsis overflow-hidden whitespace-pre-wrap
 }
 
-
-
 .slick-slide div {
-    @apply mr-1
+    @apply mr-2
 }
-
-
 ::placeholder {
     @apply text-[13px] sm:text-[1rem]
+}
+
+.arrow {
+    @apply relative top-[40%] z-10 rounded-[150px] smooth-transition grid place-items-center p-2 shadow-lg border-[1px] bg-white
+}
+.arrow-disabled {
+    @apply scale-0
+}
+.arrow-left {
+    @apply absolute left-[-20px] md:left-[-35px]
+}
+.arrow-right {
+    @apply absolute right-[-20px] md:right-[-35px]
 }

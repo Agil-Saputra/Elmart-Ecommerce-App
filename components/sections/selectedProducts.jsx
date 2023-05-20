@@ -7,9 +7,9 @@ export default function SelectedProducts({ data }) {
       <p className="text-2xl md:text-3xl font-bold mb-3 md:mb-6 sticky">
         Best Deal for you!!
       </p>
-      <div className="grid grid-flow-row overflow-x-hidden overflow-y-scroll h-[40rem] snap-y snap-mandatory overscroll-auto rounded-[5px]">
-        <Grid spacing={2} container>
-          {/* {data?.map(item => {
+      <div className="grid grid-flow-row overflow-x-hidden overflow-y-scroll h-[40rem] snap-y snap-mandatory overscroll-auto rounded-[5px] py-2">
+        <Grid spacing={1} container>
+          {data?.map(item => {
         const {title, price, description, productImages, categoryref, slug, selected} = item.fields
         return selected ? (
        <Grid item xs={12} sm={6} md={3} key={slug}>
@@ -24,31 +24,7 @@ export default function SelectedProducts({ data }) {
         </Grid>
         ) : 
        null
-      })} */}
-
-          {data?.map((item) => {
-            const {
-              title,
-              price,
-              description,
-              productImages,
-              categoryref,
-              slug,
-              selected,
-            } = item.fields;
-            return (
-              <Grid item xs={12} sm={6} md={3} key={slug}>
-                <ProductCard
-                  title={title}
-                  price={price}
-                  desc={description}
-                  image={productImages[0].fields.file.url}
-                  category={categoryref[0].fields.title}
-                  slug={slug}
-                />
-              </Grid>
-            );
-          })}
+      })}
         </Grid>
       </div>
     </section>
