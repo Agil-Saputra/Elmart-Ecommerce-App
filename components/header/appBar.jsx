@@ -79,7 +79,7 @@ export default function Navbar({ category, products }) {
   const trigger = useScrollTrigger();
   return (
     <Slide appear={false} in={!trigger} direction="down">
-      <AppBar className="bg-white p-2 shadow-2xl flex items-center flex-row justify-between gap-2 main-padding">
+      <AppBar className="bg-white p-2 shadow-2xl flex items-center flex-row justify-between gap-2 main-padding z-[1]">
         <Link href="/">
           <Image
             src={logo}

@@ -33,6 +33,13 @@ export const cartReducer = (state, action) => {
       };
     };
 
+    case "REMOVE_ALL": {
+      return {
+        ...state,
+        cart: [],
+      };
+    };
+
     case "SET_INCREMENT": {
       state.cart.map(item => {
           if (item.slug == action.payload.slug && item.choosedVariant == action.payload.variant) {
