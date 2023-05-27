@@ -49,6 +49,7 @@ export default function Trending({ data }) {
           } = item.fields;
           return trending ? (
               <ProductCard
+                key={slug}
                 title={title}
                 price={price}
                 desc={description}

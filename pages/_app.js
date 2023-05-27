@@ -9,6 +9,7 @@ import { createClient } from "contentful";
 import safeJsonStringify from "safe-json-stringify"
 import CartProvider from "@/context/Provider";
 
+
 export default function MyApp({ Component, pageProps, categoryData, productsData }) {
   const theme = createTheme({
     palette: {

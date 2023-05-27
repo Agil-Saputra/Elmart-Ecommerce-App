@@ -1,12 +1,18 @@
-import React from "react";
+import { useEffect } from "react";
 import { NoSsr, Divider, Button, ButtonGroup } from "@mui/material";
 import { cartState } from "@/context/Provider";
 import Image from "next/image";
 import RemoveFromCartButton from "@/components/ui/removeFromCartButton";
 import Link from "next/link";
 import emptycart from "../assets/emptyCart.svg";
+import axios from "axios";
+import { useRouter } from "next/router";
+
+
 
 const MyCart = () => {
+  const router = useRouter()
+
   const {
     state: { cart },
     dispatch,
@@ -15,18 +21,32 @@ const MyCart = () => {
   const TotalQuantity = cart.reduce((a, b) => a + +(+b.quantity), 0);
   const TotalPrice = cart.reduce((a, b) => a + +(+b.price) * b.quantity, 0);
 
+  async function handleCheckout() {
+    try {
+    const { data }  = await axios.post(
+      `${window.location.origin}/api/checkout_sessions`,
+      {
+        items : cart
+      }
+      )
+      router.push(data.url)
+    } catch(err) {
+      console.log(err);
+    }
+  }
+
   return (
     <NoSsr>
       {cart[0] ? (
         <div className="margin-top-global main-margin flex gap-4">
           <div className="border-2 p-2 rounded-[5px]">
-          <h2 className="text-xl font-bold">Information Order</h2>
+            <h2 className="text-xl font-bold">Shipping Information</h2>
+            
           </div>
 
           <div>
-        
             <div className="border-2 rounded-[5px] grid gap-2 p-2">
-            <h2 className="text-xl font-bold">Cart Summary</h2>
+              <h2 className="text-xl font-bold">Cart Summary</h2>
               {cart.map((item, i) => {
                 const {
                   title,
@@ -105,19 +125,29 @@ const MyCart = () => {
             </div>
 
             <div className="border-2 rounded-[5px] grid gap-2 p-2 mt-4 font-semibold">
-            <h2 className="text-xl font-bold">Order Summary</h2>
-             <div className="flex justify-between gap-8 items-center">
-               <p>Total Product : <span>{TotalQuantity}</span></p>
-               <p>Subtotal : <span className="underline underline-offset-4 font-bold text-lg ">${TotalPrice}</span></p>
-             </div>
-
-              <Button
-                fullWidth
-                variant="contained"
-                className="bg-primary shadow-md text-white"
-              >
-                Checkout
-              </Button>
+              <h2 className="text-xl font-bold">Order Summary</h2>
+              <div className="flex justify-between gap-8 items-center">
+                <p>
+                  Total Product : <span>{TotalQuantity}</span>
+                </p>
+                <p>
+                  Subtotal :{" "}
+                  <span className="underline underline-offset-4 font-bold text-lg ">
+                    ${TotalPrice}
+                  </span>
+                </p>
+              </div>
+             {/* <form action="/api/checkout_sessions" method="post"> */}
+               <Button
+                 fullWidth
+                 type="submit"
+                 variant="contained"
+                 className="bg-primary shadow-md text-white"
+                 onClick={() => handleCheckout()}
+               >
+                 Checkout
+               </Button>
+             {/* </form> */}
             </div>
           </div>
         </div>
@@ -136,12 +166,15 @@ const MyCart = () => {
           <p className="text-black text-left md:text-lg text-md">
             Come on, fill it with your dream items!
           </p>
-         <Link href="/">
-           <Button variant="contained" className="bg-primary text-white capitalize my-2">
-             start shopping
-           </Button>
-         </Link>
-          </div>
+          <Link href="/">
+            <Button
+              variant="contained"
+              className="bg-primary text-white capitalize my-2"
+            >
+              start shopping
+            </Button>
+          </Link>
+        </div>
       )}
     </NoSsr>
   );
