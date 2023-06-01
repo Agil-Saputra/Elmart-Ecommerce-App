@@ -3,7 +3,6 @@ import Navbar from '@/components/header/appBar'
 import Footer from '@/components/footer/footer'
 import ScrollTopButton from '@/components/ui/scrollTopButton'
 
-
 const appBarFooterLayout = ({children, category, products}) => {
   return (
     <>

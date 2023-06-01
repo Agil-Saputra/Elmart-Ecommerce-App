@@ -11,7 +11,6 @@ export default function Trending({ data }) {
     slidesToShow: 4,
     slidesToScroll: 3,
     arrows: true,
-    autoPlaySpeed: 300,
     nextArrow : <NextArrow/>,
     prevArrow  : <PrevArrow/>,
     responsive: [

@@ -14,7 +14,6 @@ import Image from "next/image";
 import Slider from "react-slick";
 import BackToHomeButton from "@/components/ui/backToHomeButton";
 import AddToCartButton from "@/components/ui/addToCartButton";
-import { cartState } from "@/context/Provider";
 
 export async function getStaticPaths() {
   const product = await contentfulClient("product");
@@ -81,11 +80,6 @@ const Product = ({ product, relateProducts }) => {
     className: "xmd:max-w-[500px] w-full",
   };
 
-  const {
-    state: { cart },
-  } = cartState();
-  const checkAdded = cart.some((p) => p.slug == slug);
-
   const [count, setCount] = useState(1);
 
   function handleIncrement() {
@@ -131,7 +125,7 @@ const Product = ({ product, relateProducts }) => {
                   value={variantValue}
                   exclusive
                   onChange={(e, value) => {
-                      setVariantValue(value);
+                    setVariantValue(value);
                   }}
                   className="grid grid-cols-2 gap-2"
                   sx={{

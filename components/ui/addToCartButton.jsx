@@ -1,13 +1,13 @@
 import React from 'react'
 import { Button } from '@mui/material'
 import { AddShoppingCartRounded } from '@mui/icons-material'
-import { cartState } from '@/context/Provider'
+import { State } from '@/context/Provider'
 
 const AddToCartButton = ({data, amount, variant, added}) => {
     const {
         state : { cart },
         dispatch
-    } = cartState()
+    } = State()
 
     const obj = {
         amount : 1

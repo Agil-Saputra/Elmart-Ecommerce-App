@@ -1,16 +1,23 @@
 import "@/styles/globals.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { StyledEngineProvider } from "@mui/material";
-import { ThemeProvider, createTheme } from "@mui/material";
+import {
+  StyledEngineProvider,
+  ThemeProvider,
+  createTheme,
+} from "@mui/material";
 import AppBarFooterLayout from "@/layout/appBar&FooterLayout";
 import App from "next/app";
 import { createClient } from "contentful";
-import safeJsonStringify from "safe-json-stringify"
+import safeJsonStringify from "safe-json-stringify";
 import CartProvider from "@/context/Provider";
 
-
-export default function MyApp({ Component, pageProps, categoryData, productsData }) {
+export default function MyApp({
+  Component,
+  pageProps,
+  categoryData,
+  productsData,
+}) {
   const theme = createTheme({
     palette: {
       primary: {
@@ -50,11 +57,14 @@ MyApp.getInitialProps = async (context) => {
   let categoryResponse = await client.getEntries({ content_type: "category" });
   categoryResponse = safeJsonStringify(categoryResponse);
   const categoryData = JSON.parse(categoryResponse);
-  
-  let productResponse = await client.getEntries({content_type : "product"})
+
+  let productResponse = await client.getEntries({ content_type: "product" });
   productResponse = safeJsonStringify(productResponse);
   const productData = JSON.parse(productResponse);
-  
 
-  return { ...ctx, categoryData: categoryData.items, productsData: productData.items };
+  return {
+    ...ctx,
+    categoryData: categoryData.items,
+    productsData: productData.items,
+  };
 };

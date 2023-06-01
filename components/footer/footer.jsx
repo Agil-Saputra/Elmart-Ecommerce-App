@@ -52,7 +52,7 @@ export default function Footer() {
       component="footer"
       container
       spacing={4}
-      className="main-padding mt-10 pb-5 bg-primary bg-opacity-[0.85] text-white"
+      className="main-padding mt-10 pb-5 bg-primary bg-opacity-[0.85] text-white "
     >
       <Grid {...itemsProps}>
         <div>

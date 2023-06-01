@@ -1,16 +1,16 @@
 import React from "react";
 import { IconButton, Badge, Tooltip, Avatar, Divider, NoSsr } from "@mui/material";
 import { ShoppingCart } from "@mui/icons-material";
-import { cartState } from "@/context/Provider";
+import { State } from "@/context/Provider";
 import Link from "next/link";
 import Image from "next/image";
-import emptycart from "../../assets/emptyCart.svg";
+import emptycart from "../../assets/Empty Cart.svg";
 
 
 const Cart = () => {
   const {
     state: { cart },
-  } = cartState();
+  } = State();
   const productData = cart.map((item) => item);
 
   return (
