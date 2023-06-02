@@ -30,6 +30,7 @@ export default function Home({ products, brands, categories, banner }) {
   const [load, setLoad] = useState(false);
   const { state, dispatch } = State();
   const router = useRouter();
+
   useEffect(() => {
     // Check to see if this is a redirect back from Checkout
     const query = new URLSearchParams(window.location.search);
@@ -40,7 +41,7 @@ export default function Home({ products, brands, categories, banner }) {
       });
       setLoad(true);
     }
-  }, []);
+  });
 
   return (
     <>

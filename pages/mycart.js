@@ -21,7 +21,6 @@ import RemoveFromCartButton from "@/components/ui/removeFromCartButton";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
-import useFetch from "@/hooks/useFetch";
 import { useForm, Controller, set } from "react-hook-form";
 
 import emptycart from "../assets/Empty Cart.svg";
@@ -29,6 +28,22 @@ import NoAddress from "../assets/No Navigation.svg";
 import { Delete } from "@mui/icons-material";
 import AddIcon from "@mui/icons-material/Add";
 import ShoppingCartCheckoutRoundedIcon from '@mui/icons-material/ShoppingCartCheckoutRounded';
+export const useFetch = (URL, setData) => {
+    
+  axios
+  .get(URL, {
+    headers: {
+      'X-CSCAPI-KEY' : 'NjVhMzdaajl2VkpPanBmYlMyWUdGalAyenNUNWdyUWt4aDNjZFFFZQ=='
+    },
+  })
+  .then((res) => {
+    setData(res.data)
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+}
 
 const MyCart = () => {
   const [countryData, setCountryData] = useState([]);
@@ -61,6 +76,7 @@ const MyCart = () => {
       `https://api.countrystatecity.in/v1/countries/${countryName}/states`,
       setStatesData
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countryName]);
 
   useEffect(() => {
@@ -68,6 +84,7 @@ const MyCart = () => {
       `https://api.countrystatecity.in/v1/countries/${countryName}/states/${stateName}/cities`,
       setCitiesData
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stateName]);
 
   const TotalQuantity = cart.reduce((a, b) => a + +(+b.quantity), 0);
@@ -247,11 +264,12 @@ const MyCart = () => {
                             sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
                             {...props}
                           >
-                            <img
+                            <Image
                               loading="lazy"
-                              width="20"
+                              width={20}
+                              height={20}
                               src={`https://flagcdn.com/w20/${option.iso2.toLowerCase()}.png`}
-                              alt=""
+                              alt={option.iso2}
                             />
                             {option.name}
                           </Box>
