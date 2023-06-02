@@ -15,6 +15,7 @@ import {
   ToggleButtonGroup,
   IconButton,
 } from "@mui/material";
+
 import { State } from "@/context/Provider";
 import Image from "next/image";
 import RemoveFromCartButton from "@/components/ui/removeFromCartButton";
@@ -27,23 +28,7 @@ import emptycart from "../assets/Empty Cart.svg";
 import NoAddress from "../assets/No Navigation.svg";
 import { Delete } from "@mui/icons-material";
 import AddIcon from "@mui/icons-material/Add";
-import ShoppingCartCheckoutRoundedIcon from '@mui/icons-material/ShoppingCartCheckoutRounded';
-export const useFetch = (URL, setData) => {
-    
-  axios
-  .get(URL, {
-    headers: {
-      'X-CSCAPI-KEY' : 'NjVhMzdaajl2VkpPanBmYlMyWUdGalAyenNUNWdyUWt4aDNjZFFFZQ=='
-    },
-  })
-  .then((res) => {
-    setData(res.data)
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
-}
+import ShoppingCartCheckoutRoundedIcon from "@mui/icons-material/ShoppingCartCheckoutRounded";
 
 const MyCart = () => {
   const [countryData, setCountryData] = useState([]);
@@ -60,61 +45,67 @@ const MyCart = () => {
     handleSubmit,
     formState: { errors },
     reset,
-    clearErrors
+    clearErrors,
   } = useForm({});
 
   const {
     state: { cart, address },
     dispatch,
-  } = State();
+  } = State()
+  
 
   const router = useRouter();
+  const apiKey = "NjVhMzdaajl2VkpPanBmYlMyWUdGalAyenNUNWdyUWt4aDNjZFFFZQ==";
 
   useEffect(() => {
     axios
-    .get("https://api.countrystatecity.in/v1/countries", {
-      headers: {
-        'X-CSCAPI-KEY' : process.env.API_KEY
-      },
-    })
-    .then((res) => {
-      setCountryData(res.data)
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .get("https://api.countrystatecity.in/v1/countries", {
+        headers: {
+          "X-CSCAPI-KEY": apiKey,
+        },
+      })
+      .then((res) => {
+        setCountryData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     axios
-    .get(`https://api.countrystatecity.in/v1/countries/${countryName}/states`, {
-      headers: {
-        'X-CSCAPI-KEY' : process.env.API_KEY
-      },
-    })
-    .then((res) => {
-      setStatesData(res.data)
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+      .get(
+        `https://api.countrystatecity.in/v1/countries/${countryName}/states`,
+        {
+          headers: {
+            "X-CSCAPI-KEY": apiKey,
+          },
+        }
+      )
+      .then((res) => {
+        setStatesData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [countryName]);
 
   useEffect(() => {
-
     axios
-    .get(`https://api.countrystatecity.in/v1/countries/${countryName}/states/${stateName}/cities`, {
-      headers: {
-        'X-CSCAPI-KEY' : process.env.API_KEY
-      },
-    })
-    .then((res) => {
-      setCitiesData(res.data)
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .get(
+        `https://api.countrystatecity.in/v1/countries/${countryName}/states/${stateName}/cities`,
+        {
+          headers: {
+            "X-CSCAPI-KEY": apiKey,
+          },
+        }
+      )
+      .then((res) => {
+        setCitiesData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stateName]);
 
   const TotalQuantity = cart.reduce((a, b) => a + +(+b.quantity), 0);
@@ -148,15 +139,20 @@ const MyCart = () => {
 
   const handleClose = () => {
     setOpen(false);
-    clearErrors()
+    clearErrors();
+    reset();
   };
-
 
   return (
     <NoSsr>
       {cart[0] ? (
         <div className="margin-top-global main-margin flex max-md:flex-col-reverse gap-4">
-          <div className={error ? "border-red-500 " : "border-slate-200" + " border-2 p-2 rounded-[5px] w-2/3 max-md:w-full h-fit sticky top-20"}>
+          <div
+            className={
+              (error ? "border-red-400" : "border-slate-200") +
+              " border-2 p-2 rounded-[5px] w-2/3 max-md:w-full h-fit sticky top-20"
+            }
+          >
             <h2 className="text-xl font-bold">Shipping Address</h2>
             {error && (
               <p className="text-red-400 font-bold">
@@ -262,19 +258,17 @@ const MyCart = () => {
                   onSubmit={handleSubmit((data) => {
                     if (!errors.streetAddress) {
                       dispatch({
-                      type: "ADD_ADDRESS",
-                      payload: data,
-                    });
-                    handleClose()
-                    reset()
-               
+                        type: "ADD_ADDRESS",
+                        payload: data,
+                      });
+                      handleClose();
+                      reset();
                     }
-                
                   })}
                   autoComplete="off"
                 >
                   <Controller
-                    render={({ field, fieldState : {error} }) => (
+                    render={({ field, fieldState: { error } }) => (
                       <Autocomplete
                         sx={{ width: 500 }}
                         options={countryData}
@@ -324,7 +318,7 @@ const MyCart = () => {
 
                   <div className="flex gap-4 justify-between">
                     <Controller
-                      render={({ field, fieldState : {error} }) => (
+                      render={({ field, fieldState: { error } }) => (
                         <Autocomplete
                           disableClearable
                           options={statesData}
@@ -356,7 +350,7 @@ const MyCart = () => {
                     />
 
                     <Controller
-                      render={({ field, fieldState : {error} }) => (
+                      render={({ field, fieldState: { error } }) => (
                         <Autocomplete
                           disableClearable
                           options={citiesData}
@@ -388,15 +382,20 @@ const MyCart = () => {
                   </div>
 
                   <Controller
-                    render={({ field, fieldState : {error} }) => (
-                      <TextField {...field} label="Recipient Name" fullWidth error={error}/>
+                    render={({ field, fieldState: { error } }) => (
+                      <TextField
+                        {...field}
+                        label="Recipient Name"
+                        fullWidth
+                        error={error}
+                      />
                     )}
                     name="recipientName"
                     control={control}
                     rules={{ required: true }}
                   />
                   <Controller
-                    render={({ field, fieldState : {error}}) => (
+                    render={({ field, fieldState: { error } }) => (
                       <TextField
                         {...field}
                         label="Your Email"
@@ -408,12 +407,17 @@ const MyCart = () => {
                     )}
                     name="recipientEmail"
                     control={control}
-                    rules={{ required: true }}
+                    rules={{
+                      required: true,
+                      pattern: {
+                        value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                      },
+                    }}
                   />
 
                   <div className="flex gap-2">
                     <Controller
-                      render={({ field, fieldState : {error} }) => (
+                      render={({ field, fieldState: { error } }) => (
                         <TextField
                           {...field}
                           label="Street Address"
@@ -426,18 +430,25 @@ const MyCart = () => {
                       rules={{ required: true }}
                     />
                     <Controller
-                      render={({ field , fieldState : {error}}) => (
+                      render={({ field, fieldState: { error } }) => (
                         <TextField
                           {...field}
                           label="Zip Code"
                           className="w-2/3"
                           variant="outlined"
                           error={error}
+                          type="number"
+                          helperText={error && "please enter a valid zip code"}
                         />
                       )}
                       name="zipCode"
                       control={control}
-                      rules={{ required: true }}
+                      rules={{ 
+                        required: true,
+                        pattern : {
+                          value : /^\d{5}(?:[-\s]\d{4})?$/g
+                        }
+                         }}
                     />
                   </div>
 
@@ -449,11 +460,7 @@ const MyCart = () => {
                     >
                       Cancel
                     </Button>
-                    <Button
-                      type="submit"
-                      
-                      variant="outlined"
-                    >
+                    <Button type="submit" variant="outlined">
                       Add New Address
                     </Button>
                   </div>
@@ -564,7 +571,10 @@ const MyCart = () => {
                 onClick={() => handleCheckout()}
               >
                 Proceed to Checkout
-                <ShoppingCartCheckoutRoundedIcon fontSize="small" className="ml-1"/>
+                <ShoppingCartCheckoutRoundedIcon
+                  fontSize="small"
+                  className="ml-1"
+                />
               </Button>
               {/* </form> */}
             </div>
