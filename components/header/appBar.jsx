@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 // import all material UI components and function
 import {
-  AppBar,
   IconButton,
   Stack,
   Button,
@@ -15,8 +14,7 @@ import {
   useScrollTrigger,
   Slide,
   createFilterOptions,
-  ListItem,
-  Avatar
+  Avatar,
 } from "@mui/material";
 // import all icons from material icons
 import SearchIcon from "@mui/icons-material/Search";
@@ -28,7 +26,7 @@ import Image from "next/image";
 import logo from "../../assets/logoElmart.svg";
 import Cart from "./cart";
 import Link from "next/link";
-import { cartState } from "@/context/Provider";
+import { State } from "@/context/Provider";
 import { useRouter } from "next/router";
 
 export default function Navbar({ category, products }) {
@@ -41,7 +39,7 @@ export default function Navbar({ category, products }) {
   const {
     state: { searchQuery },
     dispatch,
-  } = cartState();
+  } = State();
 
   function handleOpen() {
     if (searchQuery.length > 0) {
@@ -79,7 +77,7 @@ export default function Navbar({ category, products }) {
   const trigger = useScrollTrigger();
   return (
     <Slide appear={false} in={!trigger} direction="down">
-      <AppBar className="bg-white p-2 shadow-2xl flex items-center flex-row justify-between gap-2 main-padding z-[1]">
+      <nav className="bg-white p-2 shadow-2xl flex items-center fixed top-0 left-auto z-10 flex-row justify-between gap-2 main-padding w-full">
         <Link href="/">
           <Image
             src={logo}
@@ -207,7 +205,7 @@ export default function Navbar({ category, products }) {
             <Link href="/all-products">All Products</Link>
           </MenuItem>
         </SwipeableDrawer>
-      </AppBar>
+      </nav>
     </Slide>
   );
 }

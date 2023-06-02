@@ -1,4 +1,4 @@
-export const cartReducer = (state, action) => {
+export const Reducer = (state, action) => {
   switch (action.type) {
     case "ADD_TO_CART": {
       let found = state.cart.find(
@@ -30,6 +30,19 @@ export const cartReducer = (state, action) => {
         cart: state.cart.filter(
           ({slug, choosedVariant}) => !(slug == action.payload.slug && choosedVariant == action.payload.variant)
         ),
+      };
+    };
+
+    case "ADD_ADDRESS": {
+        return {
+          ...state, address: [ ...state.address, action.payload ],
+        };
+
+    };
+
+    case "REMOVE_ADDRESS": {
+      return {
+        ...state, address: state.address.filter(({streetAddress}) => streetAddress !== action.payload)
       };
     };
 

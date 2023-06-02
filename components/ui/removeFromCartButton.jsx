@@ -1,10 +1,10 @@
 import { IconButton } from '@mui/material'
 import React from 'react'
-import { cartState } from '@/context/Provider'
+import { State } from '@/context/Provider'
 import { Delete } from '@mui/icons-material'
 
 const RemoveFromCartButton = ({slug, variant}) => {
-    const {state : {cart}, dispatch} = cartState()
+    const {state : {cart}, dispatch} = State()
   return (
     <IconButton
     onClick={() => {
@@ -14,7 +14,6 @@ const RemoveFromCartButton = ({slug, variant}) => {
               slug : slug,
               variant : variant
             }
-           
         })
     }}
     className='text-red-400'>

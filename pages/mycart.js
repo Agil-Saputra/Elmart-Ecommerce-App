@@ -1,49 +1,474 @@
-import { useEffect } from "react";
-import { NoSsr, Divider, Button, ButtonGroup } from "@mui/material";
-import { cartState } from "@/context/Provider";
+import { useState, useEffect } from "react";
+import {
+  NoSsr,
+  Divider,
+  Button,
+  ButtonGroup,
+  Dialog,
+  DialogContent,
+  TextField,
+  Box,
+  DialogActions,
+  DialogTitle,
+  Autocomplete,
+  ToggleButton,
+  ToggleButtonGroup,
+  IconButton,
+} from "@mui/material";
+
+import { State } from "@/context/Provider";
 import Image from "next/image";
 import RemoveFromCartButton from "@/components/ui/removeFromCartButton";
 import Link from "next/link";
-import emptycart from "../assets/emptyCart.svg";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { useForm, Controller, set } from "react-hook-form";
 
-
+import emptycart from "../assets/Empty Cart.svg";
+import NoAddress from "../assets/No Navigation.svg";
+import { Delete } from "@mui/icons-material";
+import AddIcon from "@mui/icons-material/Add";
+import ShoppingCartCheckoutRoundedIcon from "@mui/icons-material/ShoppingCartCheckoutRounded";
 
 const MyCart = () => {
-  const router = useRouter()
+  const [countryData, setCountryData] = useState([]);
+  const [statesData, setStatesData] = useState([]);
+  const [citiesData, setCitiesData] = useState([]);
+
+  const [countryName, setCountryName] = useState("");
+  const [stateName, setStateName] = useState("");
+  const [error, setError] = useState(false);
+
+  const [shippingData, setShippingData] = useState({});
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    clearErrors,
+  } = useForm({});
 
   const {
-    state: { cart },
+    state: { cart, address },
     dispatch,
-  } = cartState();
+  } = State()
+  
+
+  const router = useRouter();
+  const apiKey = "NjVhMzdaajl2VkpPanBmYlMyWUdGalAyenNUNWdyUWt4aDNjZFFFZQ==";
+
+  useEffect(() => {
+    axios
+      .get("https://api.countrystatecity.in/v1/countries", {
+        headers: {
+          "X-CSCAPI-KEY": apiKey,
+        },
+      })
+      .then((res) => {
+        setCountryData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    axios
+      .get(
+        `https://api.countrystatecity.in/v1/countries/${countryName}/states`,
+        {
+          headers: {
+            "X-CSCAPI-KEY": apiKey,
+          },
+        }
+      )
+      .then((res) => {
+        setStatesData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [countryName]);
+
+  useEffect(() => {
+    axios
+      .get(
+        `https://api.countrystatecity.in/v1/countries/${countryName}/states/${stateName}/cities`,
+        {
+          headers: {
+            "X-CSCAPI-KEY": apiKey,
+          },
+        }
+      )
+      .then((res) => {
+        setCitiesData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stateName]);
 
   const TotalQuantity = cart.reduce((a, b) => a + +(+b.quantity), 0);
   const TotalPrice = cart.reduce((a, b) => a + +(+b.price) * b.quantity, 0);
 
   async function handleCheckout() {
-    try {
-    const { data }  = await axios.post(
-      `${window.location.origin}/api/checkout_sessions`,
-      {
-        items : cart
+    if (!shippingData?.countryName || null) {
+      setError(true);
+    } else {
+      try {
+        const { data } = await axios.post(
+          `${window.location.origin}/api/checkout_sessions`,
+          {
+            items: cart,
+            address: shippingData,
+          }
+        );
+        router.push(data.url);
+        setShippingData({});
+      } catch (err) {
+        console.log(err);
       }
-      )
-      router.push(data.url)
-    } catch(err) {
-      console.log(err);
     }
   }
+
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    clearErrors();
+    reset();
+  };
 
   return (
     <NoSsr>
       {cart[0] ? (
-        <div className="margin-top-global main-margin flex gap-4">
-          <div className="border-2 p-2 rounded-[5px]">
-            <h2 className="text-xl font-bold">Shipping Information</h2>
-            
-          </div>
+        <div className="margin-top-global main-margin flex max-md:flex-col-reverse gap-4">
+          <div
+            className={
+              (error ? "border-red-400" : "border-slate-200") +
+              " border-2 p-2 rounded-[5px] w-2/3 max-md:w-full h-fit sticky top-20"
+            }
+          >
+            <h2 className="text-xl font-bold">Shipping Address</h2>
+            {error && (
+              <p className="text-red-400 font-bold">
+                Please Choose your shipping Address!
+              </p>
+            )}
+            <d className="grid place-items-center gap-2 w-full mt-3">
+              {address[0] ? (
+                <ToggleButtonGroup
+                  color="primary"
+                  value={shippingData}
+                  exclusive
+                  onChange={(e, value) => {
+                    setShippingData(value);
+                    setError(false);
+                  }}
+                  className="grid grid-cols-3 gap-2 w-full"
+                  sx={{
+                    "& .MuiToggleButtonGroup-grouped:not(:first-of-type)": {
+                      borderRadius: "5px",
+                      borderColor: "primary.main",
+                    },
+                    "& .MuiToggleButtonGroup-grouped:not(:last-of-type)": {
+                      borderRadius: "5px",
+                      borderColor: "primary.main",
+                    },
+                  }}
+                >
+                  {address.map((item, i) => {
+                    const {
+                      countryName,
+                      stateName,
+                      cityName,
+                      zipCode,
+                      streetAddress,
+                      recipientName,
+                      recipientEmail,
+                    } = item;
+                    return (
+                      <ToggleButton
+                        key={i}
+                        value={item}
+                        className="shadow-md grid text-left border-primary max-md:text-[10px] text-md"
+                      >
+                        <p className="font-bold capitalize">{recipientName}</p>
+                        <p className="normal-case handle-text-overflow line-clamp-1">
+                          {recipientEmail}
+                        </p>
+                        <p className="handle-text-overflow line-clamp-1">
+                          {countryName}, {stateName}, {cityName}
+                        </p>
+                        <p className="handle-text-overflow line-clamp-1">
+                          {streetAddress}
+                        </p>
+                        <p>{zipCode}</p>
+                        <IconButton
+                          onClick={() => {
+                            dispatch({
+                              type: "REMOVE_ADDRESS",
+                              payload: streetAddress,
+                            });
+                          }}
+                          className="absolute right-0 top-0 text-red-500"
+                        >
+                          <Delete />
+                        </IconButton>
+                      </ToggleButton>
+                    );
+                  })}
+                </ToggleButtonGroup>
+              ) : (
+                <>
+                  <Image
+                    src={NoAddress}
+                    width={300}
+                    height={300}
+                    priority
+                    alt="empty cart ilustration"
+                  />
+                  <p className="text-medium text-center">
+                    Sorry there is no shipping address,
+                    <br /> Please add some Addresses{" "}
+                  </p>
+                </>
+              )}
+            </d>
+            <Button
+              fullWidth
+              className="capitalize mt-2"
+              onClick={handleClickOpen}
+            >
+              <AddIcon />
+              Add New Address
+            </Button>
+            <Dialog open={open} onClose={handleClose} className="p-2">
+              <DialogTitle className="px-4 py-3 font-bold">
+                Add New Shipping Address
+              </DialogTitle>
+              <Divider />
+              <DialogContent>
+                <form
+                  className="grid gap-4"
+                  onSubmit={handleSubmit((data) => {
+                    if (!errors.streetAddress) {
+                      dispatch({
+                        type: "ADD_ADDRESS",
+                        payload: data,
+                      });
+                      handleClose();
+                      reset();
+                    }
+                  })}
+                  autoComplete="off"
+                >
+                  <Controller
+                    render={({ field, fieldState: { error } }) => (
+                      <Autocomplete
+                        sx={{ width: 500 }}
+                        options={countryData}
+                        disableClearable
+                        autoHighlight
+                        isOptionEqualToValue={(option, value) =>
+                          option.name == value.name
+                        }
+                        onChange={(e, value) => {
+                          setCountryName(value.iso2);
+                          field.onChange(value.iso2);
+                        }}
+                        getOptionLabel={(option) => option.name}
+                        renderOption={(props, option) => (
+                          <Box
+                            component="li"
+                            sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
+                            {...props}
+                          >
+                            <Image
+                              loading="lazy"
+                              width={20}
+                              height={20}
+                              src={`https://flagcdn.com/w20/${option.iso2.toLowerCase()}.png`}
+                              alt={option.iso2}
+                            />
+                            {option.name}
+                          </Box>
+                        )}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            inputProps={{
+                              ...params.inputProps,
+                              autoComplete: "off",
+                            }}
+                            placeholder="Select Your Country"
+                            error={error}
+                          />
+                        )}
+                      />
+                    )}
+                    name="countryName"
+                    control={control}
+                    rules={{ required: true }}
+                  />
 
+                  <div className="flex gap-4 justify-between">
+                    <Controller
+                      render={({ field, fieldState: { error } }) => (
+                        <Autocomplete
+                          disableClearable
+                          options={statesData}
+                          onChange={(e, value) => {
+                            setStateName(value.iso2);
+                            field.onChange(value.name);
+                          }}
+                          fullWidth
+                          getOptionLabel={(option) => option.name}
+                          isOptionEqualToValue={(option, value) =>
+                            option.name == value.name
+                          }
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              inputProps={{
+                                ...params.inputProps,
+                                autoComplete: "off",
+                              }}
+                              placeholder="Select Your State"
+                              error={error}
+                            />
+                          )}
+                        />
+                      )}
+                      name="stateName"
+                      control={control}
+                      rules={{ required: true }}
+                    />
+
+                    <Controller
+                      render={({ field, fieldState: { error } }) => (
+                        <Autocomplete
+                          disableClearable
+                          options={citiesData}
+                          onInputChange={(e, value) => {
+                            field.onChange(value);
+                          }}
+                          fullWidth
+                          getOptionLabel={(option) => option.name}
+                          isOptionEqualToValue={(option, value) =>
+                            option.name == value.name
+                          }
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              inputProps={{
+                                ...params.inputProps,
+                                autoComplete: "off",
+                              }}
+                              placeholder="Select Your City"
+                              error={error}
+                            />
+                          )}
+                        />
+                      )}
+                      name="cityName"
+                      control={control}
+                      rules={{ required: true }}
+                    />
+                  </div>
+
+                  <Controller
+                    render={({ field, fieldState: { error } }) => (
+                      <TextField
+                        {...field}
+                        label="Recipient Name"
+                        fullWidth
+                        error={error}
+                      />
+                    )}
+                    name="recipientName"
+                    control={control}
+                    rules={{ required: true }}
+                  />
+                  <Controller
+                    render={({ field, fieldState: { error } }) => (
+                      <TextField
+                        {...field}
+                        label="Your Email"
+                        fullWidth
+                        type="email"
+                        helperText="This Email will be your payment Email"
+                        error={error}
+                      />
+                    )}
+                    name="recipientEmail"
+                    control={control}
+                    rules={{
+                      required: true,
+                      pattern: {
+                        value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                      },
+                    }}
+                  />
+
+                  <div className="flex gap-2">
+                    <Controller
+                      render={({ field, fieldState: { error } }) => (
+                        <TextField
+                          {...field}
+                          label="Street Address"
+                          className="w-[90%]"
+                          error={error}
+                        />
+                      )}
+                      name="streetAddress"
+                      control={control}
+                      rules={{ required: true }}
+                    />
+                    <Controller
+                      render={({ field, fieldState: { error } }) => (
+                        <TextField
+                          {...field}
+                          label="Zip Code"
+                          className="w-2/3"
+                          variant="outlined"
+                          error={error}
+                          type="number"
+                          helperText={error && "please enter a valid zip code"}
+                        />
+                      )}
+                      name="zipCode"
+                      control={control}
+                      rules={{ 
+                        required: true,
+                        pattern : {
+                          value : /^\d{5}(?:[-\s]\d{4})?$/g
+                        }
+                         }}
+                    />
+                  </div>
+
+                  <div className="flex justify-end gap-4 mt-4">
+                    <Button
+                      className="hover:border-red-300 border-red-400 text-red-400"
+                      onClick={handleClose}
+                      variant="outlined"
+                    >
+                      Cancel
+                    </Button>
+                    <Button type="submit" variant="outlined">
+                      Add New Address
+                    </Button>
+                  </div>
+                </form>
+              </DialogContent>
+              <DialogActions></DialogActions>
+            </Dialog>
+          </div>
           <div>
             <div className="border-2 rounded-[5px] grid gap-2 p-2">
               <h2 className="text-xl font-bold">Cart Summary</h2>
@@ -137,17 +562,21 @@ const MyCart = () => {
                   </span>
                 </p>
               </div>
-             {/* <form action="/api/checkout_sessions" method="post"> */}
-               <Button
-                 fullWidth
-                 type="submit"
-                 variant="contained"
-                 className="bg-primary shadow-md text-white"
-                 onClick={() => handleCheckout()}
-               >
-                 Checkout
-               </Button>
-             {/* </form> */}
+              {/* <form action="/api/checkout_sessions" method="post"> */}
+              <Button
+                fullWidth
+                type="submit"
+                variant="contained"
+                className="bg-primary shadow-md text-white font-bold"
+                onClick={() => handleCheckout()}
+              >
+                Proceed to Checkout
+                <ShoppingCartCheckoutRoundedIcon
+                  fontSize="small"
+                  className="ml-1"
+                />
+              </Button>
+              {/* </form> */}
             </div>
           </div>
         </div>

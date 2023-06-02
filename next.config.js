@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: false,
   images : {
-    domains : ['images.tokopedia.net', 'images.ctfassets.net', 'i.ibb.co']
+    domains : [ 'images.ctfassets.net', 'i.ibb.co', 'flagcdn.com']
   }
 }
 
