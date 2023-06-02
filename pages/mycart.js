@@ -71,20 +71,50 @@ const MyCart = () => {
   const router = useRouter();
 
   useEffect(() => {
-    useFetch("https://api.countrystatecity.in/v1/countries", setCountryData);
-    useFetch(
-      `https://api.countrystatecity.in/v1/countries/${countryName}/states`,
-      setStatesData
-    );
+    axios
+    .get("https://api.countrystatecity.in/v1/countries", {
+      headers: {
+        'X-CSCAPI-KEY' : process.env.API_KEY
+      },
+    })
+    .then((res) => {
+      setCountryData(res.data)
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+    axios
+    .get(`https://api.countrystatecity.in/v1/countries/${countryName}/states`, {
+      headers: {
+        'X-CSCAPI-KEY' : process.env.API_KEY
+      },
+    })
+    .then((res) => {
+      setStatesData(res.data)
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countryName]);
 
   useEffect(() => {
-    useFetch(
-      `https://api.countrystatecity.in/v1/countries/${countryName}/states/${stateName}/cities`,
-      setCitiesData
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    axios
+    .get(`https://api.countrystatecity.in/v1/countries/${countryName}/states/${stateName}/cities`, {
+      headers: {
+        'X-CSCAPI-KEY' : process.env.API_KEY
+      },
+    })
+    .then((res) => {
+      setCitiesData(res.data)
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
   }, [stateName]);
 
   const TotalQuantity = cart.reduce((a, b) => a + +(+b.quantity), 0);
