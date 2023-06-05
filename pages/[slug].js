@@ -56,7 +56,6 @@ export async function getStaticProps({ params }) {
 }
 
 const Product = ({ product, relateProducts }) => {
-  const [variantValue, setVariantValue] = useState(variants[0]);
   // destructure all value needed from product data
   const {
     title,
@@ -69,7 +68,9 @@ const Product = ({ product, relateProducts }) => {
   } = product.fields;
   const category = categoryref[0].fields;
   const brands = brand[0].fields;
-//  settings for slider
+  const [variantValue, setVariantValue] = useState(variants[0]);
+  
+  //  settings for slider
   const settings = {
     customPaging: function (i) {
       return (

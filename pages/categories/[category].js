@@ -7,7 +7,6 @@ import { TextField, InputAdornment, Slider, Grid } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import CategoryIcon from "@mui/icons-material/Category";
 import styled from "@emotion/styled";
-import { PriceCheck } from "@mui/icons-material";
 
 // create a custom MUI Slider for price range slider
 const PrettoSlider = styled(Slider)({
@@ -99,14 +98,14 @@ const Categories = ({ category }) => {
 
   return (
     <>
-      {/* <Image
+      <Image
         priority
         src={"https:" + categoryBanner.fields.file.url}
         alt={categoryBanner.fields.title}
         width={categoryBanner.fields.file.details.image.width}
         height={categoryBanner.fields.file.details.image.height}
         className="w-full object-fill mt-[4rem]"
-      /> */}
+      />
 
       <main className="main-margin md:translate-y-[-3rem] translate-y-[-0.8rem] bg-white shadow-lg border-2 rounded-[5px]">
         <div className="p-[10px]">
@@ -154,7 +153,7 @@ const Categories = ({ category }) => {
               " gap-3 grid max-md:grid-cols-1"
             }
           >
-            {/* {filteredProducts.map((item) => {
+            {filteredProducts.map((item) => {
               const { title, price, description, productImages, slug } =
                 item.fields;
               return (
@@ -167,7 +166,7 @@ const Categories = ({ category }) => {
                   key={title}
                 />
               );
-            })} */}
+            })}
           </div>
         </div>
       </main>
