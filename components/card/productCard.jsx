@@ -5,9 +5,23 @@ import {
   CardContent,
   Typography,
   Stack,
-  Button,
+  Badge,
 } from "@mui/material";
 import Link from "next/link";
+import { styled } from "@mui/material/styles";
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    right: 55,
+    top: 18,
+    border: `1px solid ${theme.palette.background.paper}`,
+    padding: "0 4px",
+    borderRadius: "5px",
+    width: "100px",
+    color: "white",
+    backgroundColor : "#5369D4",
+  },
+}));
 
 export default function ProductCard({
   title,
@@ -16,35 +30,41 @@ export default function ProductCard({
   desc,
   image,
   slug,
-  data,
+  trending,
 }) {
   return title ? (
     <Link href={"/" + slug}>
-      <Card className="ms:w-full shadow-none cursor-pointer p-1 hover:scale-[1.02] border-[1px] smooth-transition active:scale-[1.01] hover:text-primary">
-        <CardMedia
-          image={"https:" + image}
-          className="w-full h-[180px] md:h-[200px] rounded-[2px] object-fill"
-        />
-        <CardContent className="p-1 last:pb-0">
-          <Typography className="font-bold text-sm handle-text-overflow line-clamp-1" color="text.secondary">
-            {category}
-          </Typography>
-          <Stack direction="row" justifyContent="space-between" gap={2}>
-            <Typography className="font-bold text-lg handle-text-overflow line-clamp-1">
-              {title}
+      <StyledBadge badgeContent={trending && "Trending"} color="primary">
+        <Card className="ms:w-full shadow-none cursor-pointer p-1 hover:scale-[1.01] border-[1px] smooth-transition active:scale-[1.01] hover:text-primary">
+          <CardMedia
+            image={"https:" + image}
+            className="w-full h-[180px] md:h-[200px] rounded-[2px] object-fill"
+          />
+
+          <CardContent className="p-1 last:pb-0">
+            <Typography
+              className="font-bold text-sm handle-text-overflow line-clamp-1"
+              color="text.secondary"
+            >
+              {category}
             </Typography>
-            <Typography className="font-bold text-xl text-black">
-              ${price}
+            <Stack direction="row" justifyContent="space-between" gap={2}>
+              <Typography className="font-bold text-lg handle-text-overflow line-clamp-1">
+                {title}
+              </Typography>
+              <Typography className="font-bold text-xl text-black">
+                ${price}
+              </Typography>
+            </Stack>
+            <Typography
+              className="text-[14px] min-h-[16px] handle-text-overflow line-clamp-2 my-2"
+              component="div"
+            >
+              {desc}
             </Typography>
-          </Stack>
-          <Typography
-            className="text-[14px] min-h-[16px] handle-text-overflow line-clamp-2 my-2"
-            component="div"
-          >
-            {desc}
-          </Typography>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </StyledBadge>
     </Link>
   ) : null;
 }

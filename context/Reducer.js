@@ -61,6 +61,7 @@ export const Reducer = (state, action) => {
         })
         return { ...state, cart: [...state.cart] };
     };
+    
     case "SET_DECREMENT": {
       state.cart.map(item => {
           if (item.slug == action.payload.slug && item.choosedVariant == action.payload.variant) {
@@ -77,10 +78,6 @@ export const Reducer = (state, action) => {
       };
     }
 
-
-    
-
-    
     default:
       return state;
   }

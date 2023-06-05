@@ -12,6 +12,7 @@ export default async function handler(req, res) {
         product_data: {
           name: item.title,
           images: ["https:" + item.productImages[0].fields.file.url],
+          description: item.choosedVariant,
           metadata: {
             productId: item.slug,
           },

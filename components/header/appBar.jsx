@@ -149,16 +149,16 @@ export default function Navbar({ category, products }) {
                 </Stack>
               }
             >
-              <Button className="text-black py-1 px-2 rounded-[15px] capitalize">
+              <button className="text-black py-1 px-2 rounded-[15px] capitalize">
                 Categories
                 <AppsRoundedIcon fontSize="small" />
-              </Button>
+              </button>
             </Tooltip>
 
             <Link href="/all-products">
-              <Button className="text-black py-1 px-2 rounded-[15px] capitalize overflow-ellipsis cursor-pointer ">
+              <button className="text-black py-1 px-2 rounded-[15px] capitalize overflow-ellipsis cursor-pointer ">
                 All Products
-              </Button>
+              </button>
             </Link>
           </Stack>
 
@@ -191,13 +191,13 @@ export default function Navbar({ category, products }) {
           <Collapse in={expand}>
             <Stack direction="column">
               {category.map((item, i) => (
-                <Button
-                  key={i}
-                  className="text-left block capitalize"
-                  href={"/categories/" + item.fields.slug}
-                >
-                  {item.fields.title}
-                </Button>
+               <Link href={"/categories/" + item.fields.slug} key={i}>
+                 <Button
+                   className="text-left block capitalize"
+                 >
+                   {item.fields.title}
+                 </Button>
+               </Link>
               ))}
             </Stack>
           </Collapse>
