@@ -71,7 +71,7 @@ body {
 }
 
 .arrow {
-    @apply relative top-[40%] z-10 rounded-[150px] smooth-transition grid place-items-center p-2 shadow-lg border-[1px] bg-white
+    @apply relative top-[40%] z-10 rounded-[150px] smooth-transition grid place-items-center p-2 shadow-lg border-[1px] bg-white border-primary hover:border-inherit 
 }
 .arrow-disabled {
     @apply scale-0

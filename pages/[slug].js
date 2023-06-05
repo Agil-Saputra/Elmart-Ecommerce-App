@@ -7,6 +7,7 @@ import {
   Button,
   Typography,
   NoSsr,
+  Avatar,
 } from "@mui/material";
 import { client, contentfulClient } from "@/cms/contentful";
 import safeJsonStringify from "safe-json-stringify";
@@ -14,6 +15,8 @@ import Image from "next/image";
 import Slider from "react-slick";
 import BackToHomeButton from "@/components/ui/backToHomeButton";
 import AddToCartButton from "@/components/ui/addToCartButton";
+import Head from "next/head";
+import Link from "next/link";
 
 export async function getStaticPaths() {
   const product = await contentfulClient("product");
@@ -53,9 +56,21 @@ export async function getStaticProps({ params }) {
 }
 
 const Product = ({ product, relateProducts }) => {
-  const { title, description, price, productImages, variants, slug } =
-    product.fields;
+  // destructure all value needed from product data
+  const {
+    title,
+    description,
+    price,
+    productImages,
+    variants,
+    brand,
+    categoryref,
+  } = product.fields;
+  const category = categoryref[0].fields;
+  const brands = brand[0].fields;
   const [variantValue, setVariantValue] = useState(variants[0]);
+  
+  //  settings for slider
   const settings = {
     customPaging: function (i) {
       return (
@@ -77,22 +92,26 @@ const Product = ({ product, relateProducts }) => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    className: "xmd:max-w-[500px] w-full",
+    className: "xmd:max-w-[500px] w-full ",
   };
 
+  // setting count to adjust the quantity of product
   const [count, setCount] = useState(1);
-
   function handleIncrement() {
     setCount(count + 1);
   }
   function handleDecrement() {
     setCount(count - 1);
   }
-
+// avoid user to have 0 product quantity 
   const displayCounter = count > 1;
 
   return (
     <>
+      <Head>
+        <title>{title} | Elmart E-commerce</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       <main className="margin-top-global main-margin mb-16">
         <BackToHomeButton />
         <div className="flex max-xlg:flex-col justify-between gap-8">
@@ -117,6 +136,38 @@ const Product = ({ product, relateProducts }) => {
               </Typography>
               <Divider />
               <p className="md:max-w-[45ch] text-justify">{description}</p>
+              <div className="flex max-sm:flex-col gap-3 mt-2">
+                <Link href={"/categories/" + category.slug}>
+                  <div className="group flex gap-3 items-center border-2 w-fit p-1 rounded-[5px] hover:text-primary smooth-transition">
+                    <Avatar
+                      alt="category image"
+                      variant="rounded"
+                      className="group-hover:rotate-3"
+                      src={"https:" + category.categoryImage.fields.file.url}
+                    />
+                    <p>{category.title}</p>
+                  </div>
+                </Link>
+
+                <Link href={"/brands/" + brands.slug}>
+                  <div className="flex gap-3 group items-center border-2 w-fit p-1 hover:text-primary  rounded-[5px] smooth-transition">
+                    <Avatar
+                      alt="brand image"
+                      variant="rounded"
+                      className="group-hover:rotate-3"
+                      sx={{
+                        border: "solid 1px grey",
+                        "& .MuiAvatar-img": {
+                          objectFit: "contain",
+                          p: 1,
+                        },
+                      }}
+                      src={"https:" + brands.brandLogo.fields.file.url}
+                    />
+                    <p>{brands.title}</p>
+                  </div>
+                </Link>
+              </div>
               <p className="md:text-[2.7rem] text-[2rem]">${price}</p>
               <div className="mt-3">
                 <p className="text-xl font-medium mb-4">Available Variants :</p>
@@ -150,20 +201,14 @@ const Product = ({ product, relateProducts }) => {
           </div>
 
           <NoSsr>
-            {/* (checkAdded ? "pointer-events-none opacity-50" : "pointer-events-auto opacity-100" ) +   */}
             <div
-              className={
-                " border-2 shadow-md rounded-[5px] p-2 xlg:w-[20%] w-full h-fit"
-              }
-            >
+              className={"sm:sticky top-5 border-2 shadow-md rounded-[5px] p-2 xlg:w-[20%] w-full h-fit"}>
               <p className="text-xl font-bold">Checkout</p>
               <div className="flex justify-between gap-4 items-center my-2">
                 <p className="font-bold text-[14px]">Amount:{count}</p>
 
                 <ButtonGroup
-                  size="small"
-                  aria-label="small outlined button group"
-                >
+                  size="small">
                   <Button onClick={handleIncrement}>+</Button>
                   <Button disabled>{count}</Button>
                   <Button
@@ -185,7 +230,6 @@ const Product = ({ product, relateProducts }) => {
                 data={product.fields}
                 amount={count}
                 variant={variantValue}
-                // added={checkAdded}
               />
             </div>
           </NoSsr>

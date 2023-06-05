@@ -41,7 +41,8 @@ export default function Home({ products, brands, categories, banner }) {
       });
       setLoad(true);
     }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -56,21 +57,20 @@ export default function Home({ products, brands, categories, banner }) {
         </>
       ) : (
         <div className="margin-top-global main-margin h-[80vh] grid place-items-center">
-         <div className="text-center">
-           <CircularProgress
-             variant="indeterminate"
-             disableShrink
-             sx={{
-               color: "primary.main",
-               animationDuration: "440ms",
-               mb: 1
-             }}
-             size={60}
-             thickness={4}
-           />
-           <p>Redirecting To Succes Page...</p>
-         </div>
-
+          <div className="text-center">
+            <CircularProgress
+              variant="indeterminate"
+              disableShrink
+              sx={{
+                color: "primary.main",
+                animationDuration: "440ms",
+                mb: 1,
+              }}
+              size={60}
+              thickness={4}
+            />
+            <p>Redirecting To Succes Page...</p>
+          </div>
         </div>
       )}
     </>

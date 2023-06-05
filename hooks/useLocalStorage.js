@@ -1,7 +1,6 @@
 'use client'
 import { useState } from "react"
 
-
   // Client-side-only code
 const useLocalStorage = (key, initialValue) => {
   

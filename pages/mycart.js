@@ -22,7 +22,7 @@ import RemoveFromCartButton from "@/components/ui/removeFromCartButton";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useForm, Controller, set } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 
 import emptycart from "../assets/Empty Cart.svg";
 import NoAddress from "../assets/No Navigation.svg";
@@ -47,17 +47,17 @@ const MyCart = () => {
     reset,
     clearErrors,
   } = useForm({});
-
+  // retrieve cart and address data from context and local storage
   const {
     state: { cart, address },
     dispatch,
-  } = State()
-  
+  } = State();
 
   const router = useRouter();
   const apiKey = "NjVhMzdaajl2VkpPanBmYlMyWUdGalAyenNUNWdyUWt4aDNjZFFFZQ==";
-
+  // here i'm not using custom hook to get the API data because Hook cannot call inside a fallback
   useEffect(() => {
+    // make request to api to get list of countries
     axios
       .get("https://api.countrystatecity.in/v1/countries", {
         headers: {
@@ -70,7 +70,7 @@ const MyCart = () => {
       .catch((err) => {
         console.log(err);
       });
-
+      // include countryName to get selected stateName based on selected country name
     axios
       .get(
         `https://api.countrystatecity.in/v1/countries/${countryName}/states`,
@@ -87,7 +87,7 @@ const MyCart = () => {
         console.log(err);
       });
   }, [countryName]);
-
+  // get city based on selected countryName and stateName
   useEffect(() => {
     axios
       .get(
@@ -107,15 +107,17 @@ const MyCart = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stateName]);
-
+  // sum all quantity and price to display it on summary section
   const TotalQuantity = cart.reduce((a, b) => a + +(+b.quantity), 0);
   const TotalPrice = cart.reduce((a, b) => a + +(+b.price) * b.quantity, 0);
 
   async function handleCheckout() {
+    // check if shipping data doesnt have a value
     if (!shippingData?.countryName || null) {
       setError(true);
     } else {
       try {
+        // if shippingData has a value, execute this checkout
         const { data } = await axios.post(
           `${window.location.origin}/api/checkout_sessions`,
           {
@@ -130,13 +132,11 @@ const MyCart = () => {
       }
     }
   }
-
+  // state to control the popup address menu
   const [open, setOpen] = useState(false);
-
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
     clearErrors();
@@ -443,12 +443,12 @@ const MyCart = () => {
                       )}
                       name="zipCode"
                       control={control}
-                      rules={{ 
+                      rules={{
                         required: true,
-                        pattern : {
-                          value : /^\d{5}(?:[-\s]\d{4})?$/g
-                        }
-                         }}
+                        pattern: {
+                          value: /^\d{5}(?:[-\s]\d{4})?$/g,
+                        },
+                      }}
                     />
                   </div>
 

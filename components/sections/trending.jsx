@@ -31,7 +31,7 @@ export default function Trending({ data }) {
     ],
   };
   return (
-    <section className="mt-6 md:mt-[3.3rem] shadow-md rounded-md main-margin">
+    <section className="mt-6 md:mt-[3.3rem] shadow-md rounded-md main-margin ">
       <p className="text-2xl md:text-3xl font-bold mb-3 md:mb-6">
         Trending Products
       </p>
@@ -55,6 +55,7 @@ export default function Trending({ data }) {
                 image={productImages[0].fields.file.url}
                 category={categoryref[0].fields.title}
                 slug={slug}
+                trending={trending}
               />
           ) : null;
         })}
