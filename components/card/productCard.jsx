@@ -39,7 +39,7 @@ export default function ProductCard({
         <Card className="ms:w-full shadow-none cursor-pointer p-1 hover:scale-[1.01] border-[1px] smooth-transition active:scale-[1.01] hover:text-primary group">
           <CardMedia
             image={"https:" + image}
-            className="w-full h-[180px] md:h-[200px] rounded-[2px] bg-contain bg-slate-100 group-hover:bg-cover"
+            className="w-full h-[180px] md:h-[200px] rounded-[2px] bg-cover bg-slate-100 group-hover:bg-contain"
           />
 
           <CardContent className="p-1 last:pb-0">
