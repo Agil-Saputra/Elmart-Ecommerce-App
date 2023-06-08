@@ -35,9 +35,10 @@ export async function getStaticPaths() {
 const Brand = ({brand}) => {
     console.log(brand);
   return (
-   <>
+   <main className='flex main-margin margin-top-global gap-4'>
+     <div className='min-w-[400px]'>brand</div>
      <div>brand</div>
-   </>
+   </main>
   )
 }
 

@@ -15,7 +15,7 @@ const Succes = () => {
           alt="success ilustration"
         />
        <p className="mt-4 text-xl ">
-         Payment Successful Return to <span className="font-bold text-primary hover:text-green-800 smooth-transition"><Link href="/" >Home</Link></span> Page
+         Your Payment Successful Return to <span className="font-bold text-primary hover:text-green-800 smooth-transition"><Link href="/" >Home</Link></span> Page
        </p>
     </div>
     </div>

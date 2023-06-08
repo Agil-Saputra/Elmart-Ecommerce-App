@@ -33,13 +33,15 @@ const AllProducts = ({ products }) => {
           .includes(searchQuery.toLowerCase())
     );
   }
-  const filteredProducts = filtered(products);
+  const SearchedProducts = filtered(products);
+  console.log(products);
 
   return (
-    <div className="margin-top-global main-margin">
-      {filteredProducts[0] ? (
-        <div className="gap-2 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 min-h-[90vh]">
-          {filteredProducts.map((item, i) => {
+    <div className="margin-top-global main-margin flex justify-between gap-4">
+    <div className="bg-red-400 h-full min-w-[300px]">oke</div>
+      {SearchedProducts[0] ? (
+        <div className="gap-2 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 min-h-[90vh]">
+          {SearchedProducts.map((item, i) => {
             const {
               slug,
               title,
