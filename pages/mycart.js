@@ -26,9 +26,9 @@ import { useForm, Controller } from "react-hook-form";
 
 import emptycart from "../assets/Empty Cart.svg";
 import NoAddress from "../assets/No Navigation.svg";
-import { Delete } from "@mui/icons-material";
-import AddIcon from "@mui/icons-material/Add";
-import ShoppingCartCheckoutRoundedIcon from "@mui/icons-material/ShoppingCartCheckoutRounded";
+import { Delete, AddLocationAlt, ShoppingCartCheckoutRounded, ReceiptLong, ShoppingBag, LocalShipping } from "@mui/icons-material"
+import Head from "next/head";
+
 
 const MyCart = () => {
   const [countryData, setCountryData] = useState([]);
@@ -145,6 +145,10 @@ const MyCart = () => {
 
   return (
     <NoSsr>
+     <Head>
+        <title>Checkout | Elmart E-commerce</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       {cart[0] ? (
         <div className="margin-top-global main-margin flex max-md:flex-col-reverse gap-4">
           <div
@@ -153,7 +157,7 @@ const MyCart = () => {
               " border-2 p-2 rounded-[5px] w-2/3 max-md:w-full h-fit sticky top-20"
             }
           >
-            <h2 className="text-xl font-bold">Shipping Address</h2>
+            <h2 className="text-xl font-bold"><LocalShipping className="mr-1"/>Shipping Address</h2>
             {error && (
               <p className="text-red-400 font-bold">
                 Please Choose your shipping Address!
@@ -244,7 +248,7 @@ const MyCart = () => {
               className="capitalize mt-2"
               onClick={handleClickOpen}
             >
-              <AddIcon />
+              <AddLocationAlt/>
               Add New Address
             </Button>
             <Dialog open={open} onClose={handleClose} className="p-2">
@@ -471,7 +475,7 @@ const MyCart = () => {
           </div>
           <div>
             <div className="border-2 rounded-[5px] grid gap-2 p-2">
-              <h2 className="text-xl font-bold">Cart Summary</h2>
+              <h2 className="text-xl font-bold"><ShoppingBag className="mr-1"/>Cart Summary</h2>
               {cart.map((item, i) => {
                 const {
                   title,
@@ -550,10 +554,11 @@ const MyCart = () => {
             </div>
 
             <div className="border-2 rounded-[5px] grid gap-2 p-2 mt-4 font-semibold">
-              <h2 className="text-xl font-bold">Order Summary</h2>
+              <h2 className="text-xl font-bold"><ReceiptLong className="mr-1"/>Order Summary</h2>
               <div className="flex justify-between gap-8 items-center">
                 <p>
-                  Total Product : <span>{TotalQuantity}</span>
+                  Total Product : <span>{TotalQuantity} </span>
+                  {TotalQuantity > 1 ? 'items' : 'item'}
                 </p>
                 <p>
                   Subtotal :{" "}
@@ -571,7 +576,7 @@ const MyCart = () => {
                 onClick={() => handleCheckout()}
               >
                 Proceed to Checkout
-                <ShoppingCartCheckoutRoundedIcon
+                <ShoppingCartCheckoutRounded
                   fontSize="small"
                   className="ml-1"
                 />

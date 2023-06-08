@@ -17,10 +17,7 @@ import {
   Avatar,
 } from "@mui/material";
 // import all icons from material icons
-import SearchIcon from "@mui/icons-material/Search";
-import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
-import MenuIcon from "@mui/icons-material/Menu";
-import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import { ExpandLess, ExpandMore, Inventory, AppsRounded, Menu, Search, Category } from "@mui/icons-material";
 // import assets for logo Image
 import Image from "next/image";
 import logo from "../../assets/logoElmart.svg";
@@ -77,7 +74,7 @@ export default function Navbar({ category, products }) {
   const trigger = useScrollTrigger();
   return (
     <Slide appear={false} in={!trigger} direction="down">
-      <nav className="bg-white p-2 shadow-2xl flex items-center fixed top-0 left-auto z-10 flex-row justify-between gap-2 main-padding w-full">
+      <nav className="bg-white p-2 shadow-2xl flex items-center fixed top-0 left-auto z-30 flex-row justify-between gap-2 main-padding w-full">
         <Link href="/">
           <Image
             src={logo}
@@ -109,7 +106,7 @@ export default function Navbar({ category, products }) {
                   placeholder: "Search Elmart products...",
                   startAdornment: (
                     <InputAdornment position="start" className="mr-0 ml-1">
-                      <SearchIcon />
+                      <Search />
                     </InputAdornment>
                   ),
                 }}
@@ -149,15 +146,16 @@ export default function Navbar({ category, products }) {
                 </Stack>
               }
             >
-              <button className="text-black py-1 px-2 rounded-[15px] capitalize">
+              <button className="text-black py-1 px-2 rounded-[15px] capitalize hover:text-primary smooth-transition">
                 Categories
-                <AppsRoundedIcon fontSize="small" />
+                <Category fontSize="small" className="opacity-75 ml-1"/>
               </button>
             </Tooltip>
 
             <Link href="/all-products">
-              <button className="text-black py-1 px-2 rounded-[15px] capitalize overflow-ellipsis cursor-pointer ">
+              <button className="text-black py-1 px-2 rounded-[15px] capitalize overflow-ellipsis cursor-pointer hover:text-primary smooth-transition">
                 All Products
+              <Inventory fontSize="small" className="opacity-75 ml-1"/>
               </button>
             </Link>
           </Stack>
@@ -165,10 +163,10 @@ export default function Navbar({ category, products }) {
           <Cart />
 
           <IconButton
-            className="flex xmd:hidden"
+            className="flex xmd:hidden group"
             onClick={() => setOpenNav(true)}
           >
-            <MenuIcon />
+            <Menu/>
           </IconButton>
         </Stack>
 
