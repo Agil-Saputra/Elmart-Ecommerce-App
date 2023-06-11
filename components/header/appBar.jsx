@@ -17,7 +17,7 @@ import {
   Avatar,
 } from "@mui/material";
 // import all icons from material icons
-import { ExpandLess, ExpandMore, Inventory, AppsRounded, Menu, Search, Category } from "@mui/icons-material";
+import { ExpandLess, ExpandMore, Inventory, AppsRounded, Menu, Search,  } from "@mui/icons-material";
 // import assets for logo Image
 import Image from "next/image";
 import logo from "../../assets/logoElmart.svg";
@@ -146,9 +146,9 @@ export default function Navbar({ category, products }) {
                 </Stack>
               }
             >
-              <button className="text-black py-1 px-2 rounded-[15px] capitalize hover:text-primary smooth-transition">
+              <button className="text-black py-1 px-2 rounded-[15px] capitalize hover:opacity-50">
                 Categories
-                <Category fontSize="small" className="opacity-75 ml-1"/>
+                <AppsRounded fontSize="small" className=" ml-[2px]"/>
               </button>
             </Tooltip>
 

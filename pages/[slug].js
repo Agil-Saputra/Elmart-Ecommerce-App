@@ -14,8 +14,8 @@ import { client, contentfulClient } from "@/cms/contentful";
 import safeJsonStringify from "safe-json-stringify";
 import Image from "next/image";
 import Slider from "react-slick";
-import BackToHomeButton from "@/components/ui/backToHomeButton";
-import AddToCartButton from "@/components/ui/addToCartButton";
+import BackToHomeButton from "@/components/ui/buttons/backToHomeButton";
+import AddToCartButton from "@/components/ui/buttons/addToCartButton";
 import Head from "next/head";
 import Link from "next/link";
 import ProductCard from "@/components/card/productCard";
@@ -84,7 +84,7 @@ const Product = ({ product, relateProducts: { items } }) => {
             src={"https:" + productImages[i]?.fields.file.url}
             width={100}
             height={100}
-            className="h-full w-auto rounded-[5px] border-[1px] shadow-sm"
+            className="h-full w-auto rounded-[5px] border-[1px] shadow-lg"
             alt={productImages[i]?.fields.title}
           />
         </a>
@@ -111,11 +111,18 @@ const Product = ({ product, relateProducts: { items } }) => {
   // avoid user to have 0 product quantity
   const displayCounter = count > 1;
 
-  const relateItems = items.filter(
-    ({ fields }) =>
-      fields.categoryref[0].fields.title == categoryref[0].fields.title ||
-      fields.brand[0].fields.title == brands.title
-  );
+  const relateItems = items
+    .filter(
+      ({ fields }) =>
+      // filter products by category and brand to create relate products
+        fields.categoryref[0].fields.title == categoryref[0].fields.title ||
+        fields.brand[0].fields.title == brands.title
+    )
+    // remove inital product from array
+    .filter(({ fields }) => fields.title !== title);
+
+  // console.log(relateItems.filter(item => ))
+
   return (
     <>
       <Head>
@@ -126,7 +133,7 @@ const Product = ({ product, relateProducts: { items } }) => {
         <BackToHomeButton />
         <Breadcrumbs
           sx={{
-            mb : 1,
+            mb: 1,
             "& .MuiBreadcrumbs-li": {
               "&:hover, &:focus": {
                 color: "primary.main",
@@ -202,7 +209,6 @@ const Product = ({ product, relateProducts: { items } }) => {
                   color="primary"
                   value={variantValue}
                   exclusive
-                  defaultValue={variants[0]}
                   onChange={(e, value) => {
                     setVariantValue(value);
                     if (value == null) {
