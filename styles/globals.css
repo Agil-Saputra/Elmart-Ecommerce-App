@@ -59,7 +59,7 @@ body {
 .margin-top-global {
     @apply md:mt-20 mt-14
 }
-.handle-text-overflow{
+.handle-text-overflow {
     @apply overflow-ellipsis overflow-hidden whitespace-pre-wrap
 }
 

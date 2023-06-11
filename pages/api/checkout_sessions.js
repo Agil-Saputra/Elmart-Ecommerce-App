@@ -39,6 +39,7 @@ export default async function handler(req, res) {
           country: countryName,
         },
       },
+      receipt_email: recipientEmail
     },
     customer_email : recipientEmail,
     shipping_options: [

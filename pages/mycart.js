@@ -18,7 +18,7 @@ import {
 
 import { State } from "@/context/Provider";
 import Image from "next/image";
-import RemoveFromCartButton from "@/components/ui/removeFromCartButton";
+import RemoveFromCartButton from "@/components/ui/buttons/removeFromCartButton";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -251,14 +251,14 @@ const MyCart = () => {
               <AddLocationAlt/>
               Add New Address
             </Button>
-            <Dialog open={open} onClose={handleClose} className="p-2">
+            <Dialog open={open} onClose={handleClose} className="p-2 max-md:p-0">
               <DialogTitle className="px-4 py-3 font-bold">
                 Add New Shipping Address
               </DialogTitle>
               <Divider />
               <DialogContent>
                 <form
-                  className="grid gap-4"
+                  className="grid gap-4 "
                   onSubmit={handleSubmit((data) => {
                     if (!errors.streetAddress) {
                       dispatch({
@@ -274,7 +274,6 @@ const MyCart = () => {
                   <Controller
                     render={({ field, fieldState: { error } }) => (
                       <Autocomplete
-                        sx={{ width: 500 }}
                         options={countryData}
                         disableClearable
                         autoHighlight
@@ -320,7 +319,7 @@ const MyCart = () => {
                     rules={{ required: true }}
                   />
 
-                  <div className="flex gap-4 justify-between">
+                  <div className="flex gap-4 justify-between max-md:flex-col">
                     <Controller
                       render={({ field, fieldState: { error } }) => (
                         <Autocomplete
@@ -419,13 +418,13 @@ const MyCart = () => {
                     }}
                   />
 
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 max-md:flex-col">
                     <Controller
                       render={({ field, fieldState: { error } }) => (
                         <TextField
                           {...field}
                           label="Street Address"
-                          className="w-[90%]"
+                          className="w-[90%] max-md:w-full"
                           error={error}
                         />
                       )}
@@ -438,7 +437,7 @@ const MyCart = () => {
                         <TextField
                           {...field}
                           label="Zip Code"
-                          className="w-2/3"
+                          className="w-2/3 max-md:w-full"
                           variant="outlined"
                           error={error}
                           type="number"

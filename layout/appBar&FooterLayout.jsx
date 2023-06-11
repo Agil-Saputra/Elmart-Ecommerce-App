@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from '@/components/header/appBar'
 import Footer from '@/components/footer/footer'
-import ScrollTopButton from '@/components/ui/scrollTopButton'
+import ScrollTopButton from '@/components/ui/buttons/scrollTopButton'
 
 const appBarFooterLayout = ({children, category, products}) => {
   return (

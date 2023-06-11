@@ -114,7 +114,7 @@ const Cart = () => {
                 },
               }}
             >
-              <ShoppingCart />
+              <ShoppingCart className="text-black hover:text-primary smooth-transition"/>
             </Badge>
          </NoSsr>
          </IconButton>
