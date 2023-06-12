@@ -1,8 +1,8 @@
-# Elemart-Ecommerce-App
+# Elmart-Ecommerce-App
 
 Elemart is an electronics online store built with Next.js, a React framework for building modern web applications. The project utilizes Contentful, a headless CMS (Content Management System), to manage the content and product information, while Stripe, a popular payment gateway, is integrated for secure and seamless online transactions.
 
-## Installation
+## Installation(Locally)
 
      1. Clone the repository:
 
@@ -14,7 +14,7 @@ git clone <repository-url>
      2. Navigate to the project directory:
 
 ```bash
-cd elemart
+cd elmart
 ```
 
     3.install NPM:
@@ -44,10 +44,22 @@ The Elemart online store will be accessible at http://localhost:3000.
 To deploy the Elemart project, you can utilize platforms like Vercel, Netlify, or other hosting providers that support Next.js applications. Ensure you have the necessary environment variables set up for the Strapi CMS and Stripe integration.
 
 For detailed deployment instructions, refer to the official documentation of the chosen hosting platform.
+This projects is already Deployed on [here](https://elemart-ecommerce-app.vercel.app/).
 
-## Next.js Resources
+## Technologies
 
-This repository provides resources to help you learn more about Next.js, a popular framework for building React applications.
+- [Next.js 13](https://nextjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Material UI](https://mui.com)
+- [Stripe](https://stripe.com/)
+
+## Useful Resources On this Repository
+
+- [axios](https://axios-http.com/docs/intro)
+- [contentful](https://www.contentful.com/)
+- [react-hooks-form](https://www.react-hook-form.com/)
+- [Country-State-City API](https://api.countrystatecity.in)
+- [react-slick](http://react-slick.neostack.com/)
 
 ## Documentation
 
