@@ -5,11 +5,11 @@ import { State } from "@/context/Provider";
 import SomethingWrong from "../assets/Something went wrong.svg";
 import Image from "next/image";
 import styled from "@emotion/styled";
-import { Slider, Divider, Button } from "@mui/material";
+import { Slider, Divider, Button, Drawer} from "@mui/material";
 import useSortByCriteria from "@/hooks/useSortByCriteria";
 import SortSelect from "@/components/ui/select/sortSelect";
 import ToggleButtonComp from "@/components/ui/toggleButton";
-import {Apple, Category, FilterList, Tune} from "@mui/icons-material"
+import { Apple, Category,Tune } from "@mui/icons-material";
 // create a custom MUI Slider for price range slider
 export const PrettoSlider = styled(Slider)({
   marginLeft: "7px",
@@ -43,10 +43,12 @@ export async function getStaticProps() {
 }
 // retrieve searchQuery value from context
 const AllProducts = ({ products, categories, brands }) => {
-  const [value, setValue] = useState([0, 5000]);
+  const [priceValue, setPriceValue] = useState([0, 5000]);
   const [sortName, setSortName] = useState("");
   const [categoryName, setCategoryName] = useState(null);
   const [brandName, setBrandName] = useState(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   const {
     state: { searchQuery },
   } = State();
@@ -68,7 +70,7 @@ const AllProducts = ({ products, categories, brands }) => {
   const filteredProductsByPrice = searchedProducts(products)
     .filter(
       ({ fields }) =>
-        (fields.price >= value[0] && fields.price <= value[1]) || ""
+        (fields.price >= priceValue[0] && fields.price <= priceValue[1]) || ""
     )
     .map(({ fields }) => fields);
 
@@ -78,80 +80,124 @@ const AllProducts = ({ products, categories, brands }) => {
     return data.filter(({ categoryref, brand }) => {
       const categoryTitle = categoryref[0].fields.title;
       const brandTitle = brand[0].fields.title;
-
       if (categoryName == null && brandName == null) {
         return true;
-      } else if (brandName && categoryName) {
+      }  
+      if (brandName && categoryName) {
         return categoryTitle == categoryName && brandTitle == brandName;
-      } else if (brandName) {
+      } 
+       if (brandName) {
         return brandTitle == brandName;
-      } else if (categoryName) {
+      } 
+      if (categoryName) {
         return categoryTitle == categoryName;
       }
     });
   }
 
-  const finalProducts = filterByCriteria(sorted);
+  const finalProducts = filterByCriteria(sorted); // save filtered, and searched products on one variable
+
+  const FilterComponent = (
+    <div className="rounded-[5px] h-fit min-w-[300px] sticky top-10 p-3 border-2 overflow-scroll">
+      <h1 className="font-bold text-2xl mb-3 mt-2 flex items-center gap-1 justify-between">
+        Shop By
+        <Tune />
+      </h1>
+      <Divider fullWidth />
+      <div>
+        <p className="text-lg font-medium">Price $</p>
+        <PrettoSlider
+          value={priceValue}
+          min={0}
+          max={5000}
+          marks={[
+            { value: priceValue[0], label: `${priceValue[0]}$` },
+            { value: priceValue[1], label: `${priceValue[1]}$` },
+          ]}
+          onChange={(e, value) => setPriceValue(value)}
+          valueLabelFormat={(value) => `${value}$`}
+        />
+        <p className="font-bold flex items-center">
+          Categories
+          <Category fontSize="small" />
+        </p>
+        <Divider className="h-[4px]" />
+        <ToggleButtonComp
+          data={category}
+          criteria={categoryName}
+          setCriteria={setCategoryName}
+        />
+        <p className="font-bold flex items-center">
+          Brands
+          <Apple fontSize="small" />
+        </p>
+        <Divider className="h-[4px]" />
+        <ToggleButtonComp
+          data={brand}
+          criteria={brandName}
+          setCriteria={setBrandName}
+        />
+        <Divider className="h-[4px]" />
+        {categoryName || brandName ? (
+          <Button
+            variant="outlined"
+            color="error"
+            className="mt-2 capitalize"
+            onClick={() => {
+              setBrandName(null);
+              setCategoryName(null);
+              setPriceValue([0, 5000]);
+            }}
+          >
+            Reset Filter
+          </Button>
+        ) : null}
+      </div>
+    </div>
+  );
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
 
   return (
     <div className="margin-top-global main-margin flex gap-4">
-      <div className="rounded-[5px] h-full min-w-[300px] sticky top-10 p-3 border-2 overflow-hidden">
-        <h1 className="font-bold text-2xl mb-3 mt-2 flex items-center gap-1">Shop By<Tune/></h1>
-        <Divider fullWidth />
-        <div>
-          <p className="text-lg font-medium">Price $</p>
-          <PrettoSlider
-            valueLabelDisplay="off"
-            value={value}
-            min={0}
-            max={5000}
-            marks={[
-              { value: value[0], label: `${value[0]}$` },
-              { value: value[1], label: `${value[1]}$` },
-            ]}
-            onChange={(e, value) => setValue(value)}
-            valueLabelFormat={(value) => `${value}$`}
-          />
-          <p className="font-bold flex items-center">Categories<Category fontSize="small"/></p>
-          <Divider className="h-[4px]" />
-          <ToggleButtonComp
-            data={category}
-            criteria={categoryName}
-            setCriteria={setCategoryName}
-          />
-          <p className="font-bold flex items-center">Brands<Apple fontSize="small"/></p>
-          <Divider className="h-[4px]" />
-          <ToggleButtonComp
-            data={brand}
-            criteria={brandName}
-            setCriteria={setBrandName}
-          />
-          <Divider className="h-[4px]" />
-          {categoryName || brandName ? (
-            <Button
-              variant="outlined"
-              color="error"
-              className="mt-2 capitalize"
-              onClick={() => {
-                setBrandName(null);
-                setCategoryName(null);
-                setValue([0, 5000]);
-              }}
-            >
-              Reset Filter
-            </Button>
-          ) : null}
-        </div>
-      </div>
+
+      <Drawer
+        variant="temporary"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        onClick={handleDrawerToggle}
+        className="hidden max-[800px]:block p-1"
+        ModalProps={{
+          keepMounted: true,
+        }}
+        sx={{
+         
+          "& .MuiDrawer-paper": { boxSizing: "border-box", },
+        }}
+      >
+        {FilterComponent}
+      </Drawer>
+
+     
+       <div className="block max-[800px]:hidden">{FilterComponent}</div>
+
       <div
-        className={!finalProducts[0] ? "w-full" : "w-fit" + " flex flex-col"}
+        className={!finalProducts[0] ? "w-full" : "w-fit" }
       >
         {finalProducts[0] ? (
           <>
-            <div className="self-end mb-3 t">
-              <SortSelect sortName={sortName} setSortName={setSortName} />
+            <div className="flex w-full items-start justify-end max-[800px]:justify-between">
+           <div onClick={handleDrawerToggle} className="max-[800px]:block hidden hover:bg-slate-100 p-1 rounded-[100px]">
+               <Tune />
+           </div>
+            
+              <div className="mb-3">
+                <SortSelect sortName={sortName} setSortName={setSortName} />
+              </div>
+    
             </div>
-            <div className="gap-2 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 min-h-[90vh] w-full">
+            <div className="gap-2 grid max-[455px]:grid-cols-1 grid-cols-2 lg:grid-cols-3 mlg:grid-cols-4 min-h-[90vh] w-full">
               {finalProducts.map(
                 ({
                   slug,

@@ -14,15 +14,23 @@ export default function Trending({ data }) {
     nextArrow : <NextArrow/>,
     prevArrow  : <PrevArrow/>,
     responsive: [
+     
       {
-        breakpoint: 711,
+        breakpoint: 883,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 2,
         },
       },
       {
-        breakpoint: 485,
+        breakpoint: 712,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 430,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
