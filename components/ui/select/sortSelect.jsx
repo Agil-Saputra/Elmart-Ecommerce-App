@@ -1,6 +1,7 @@
 import React from 'react'
 import { Select, InputBase, MenuItem } from '@mui/material';
 import styled from '@emotion/styled';
+import { FilterList } from "@mui/icons-material";
 
 export const StyledInput = styled(InputBase)(({ theme }) => ({
     "label + &": {
@@ -28,7 +29,7 @@ const SortSelect = ({sortName, setSortName}) =>  (
     displayEmpty
     renderValue={(selected) => {
       if (selected.length == 0) {
-        return "Sort By";
+        return <p className='flex items-center gap-1'><FilterList/>Sort By</p>
       }
       return <span className="capitalize">{selected}</span>
     }}
@@ -36,7 +37,6 @@ const SortSelect = ({sortName, setSortName}) =>  (
     onChange={(e) => setSortName(e.target.value)}
     className="h-full w-fit"
   >
-    <MenuItem value="" disabled>Sort By</MenuItem>
     <MenuItem value="price(highest)">Price(Highest)</MenuItem>
     <MenuItem value="price(lowest)">Price(Lowest)</MenuItem>
     <MenuItem value="title(A-Z)">Title(A-Z)</MenuItem>

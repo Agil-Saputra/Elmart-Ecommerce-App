@@ -12,7 +12,7 @@ import { styled } from "@mui/material/styles";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
-    right: 45,
+    right: 55,
     top: 18,
     border: `1px solid ${theme.palette.background.paper}`,
     padding: "0 4px",

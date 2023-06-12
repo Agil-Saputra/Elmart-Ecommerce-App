@@ -3,17 +3,12 @@ import Image from "next/image";
 import { contentfulClient, client } from "@/cms/contentful";
 import safeJsonStringify from "safe-json-stringify";
 import ProductCard from "@/components/card/productCard";
-import {
-  TextField,
-  InputAdornment,
-} from "@mui/material";
+import { TextField, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import CategoryIcon from "@mui/icons-material/Category";
 import SortSelect from "@/components/ui/select/sortSelect";
 import Head from "next/head";
 import useSortByCriteria from "@/hooks/useSortByCriteria";
-
-
+import SomethingWrong from "../../assets/Something went wrong.svg";
 
 export async function getStaticPaths() {
   const product = await contentfulClient("category");
@@ -29,7 +24,6 @@ export async function getStaticPaths() {
   };
 }
 
-
 export async function getStaticProps({ params }) {
   const { items } = await client.getEntries({
     content_type: "category",
@@ -44,7 +38,6 @@ export async function getStaticProps({ params }) {
     },
   };
 }
-
 
 const Categories = ({ category }) => {
   const [query, setQuery] = useState("");
@@ -96,31 +89,51 @@ const Categories = ({ category }) => {
               }}
             />
             <div>
-            <SortSelect sortName={sortName} setSortName={setSortName}/>
+              <SortSelect sortName={sortName} setSortName={setSortName} />
             </div>
           </div>
 
-          <div
-            className={
-              (product.length > 2 ? "grid-cols-4" : "grid-cols-2") +
-              " gap-3 grid max-md:grid-cols-1"
-            }
-          >
-            {sortedProducts.map(
-              ({ title, price, description, productImages, slug }) => {
-                return (
-                  <ProductCard
-                    title={title}
-                    price={price}
-                    desc={description}
-                    image={productImages[0].fields.file.url}
-                    slug={slug}
-                    key={title}
-                  />
-                );
+          {sortedProducts[0] ? (
+            <div
+              className={
+                (product.length > 3 ? "md:grid-cols-4" : "md:grid-cols-3") +
+                " gap-3 grid sm:grid-cols-2 grid-cols-1 "
               }
-            )}
-          </div>
+            >
+              {sortedProducts.map(
+                ({ title, price, description, productImages, slug }) => {
+                  return (
+                    <ProductCard
+                      title={title}
+                      price={price}
+                      desc={description}
+                      image={productImages[0].fields.file.url}
+                      slug={slug}
+                      key={title}
+                    />
+                  );
+                }
+              )}
+            </div>
+          ) : (
+            <div className="grid place-items-center w-full text-center">
+                <Image
+                  src={SomethingWrong}
+                  width={500}
+                  height={500}
+                  priority
+                  alt="Something Wrong ilustration"
+                />
+                <p className="md:text-xl font-medium mt-4 text-red-400">
+                  <span className="font-bold md:text-[25px]">
+                    Something Wrong!{" "}
+                  </span>
+                  <br />
+                  We couldn't find your product,
+                  <br /> please try another keyword
+                </p>
+            </div>
+          )}
         </div>
       </main>
     </>
@@ -128,3 +141,4 @@ const Categories = ({ category }) => {
 };
 
 export default Categories;
+
