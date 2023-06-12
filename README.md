@@ -41,7 +41,7 @@ The Elemart online store will be accessible at http://localhost:3000.
 
 ## Deployment
 
-To deploy the Elemart project, you can utilize platforms like Vercel, Netlify, or other hosting providers that support Next.js applications. Ensure you have the necessary environment variables set up for the Strapi CMS and Stripe integration.
+To deploy the Elemart project, you can utilize platforms like Vercel, Netlify, or other hosting providers that support Next.js applications. Ensure you have the necessary environment variables set up for the Contentful CMS and Stripe integration.
 
 For detailed deployment instructions, refer to the official documentation of the chosen hosting platform.
 This projects is already Deployed on [here](https://elemart-ecommerce-app.vercel.app/).
