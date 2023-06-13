@@ -150,7 +150,7 @@ const MyCart = () => {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       {cart[0] ? (
-        <div className="margin-top-global main-margin flex max-md:flex-col-reverse gap-4">
+        <div className="margin-top-global main-margin flex max-[930px]:flex-col-reverse gap-4">
           <div
             className={
               (error ? "border-red-400" : "border-slate-200") +
@@ -221,7 +221,7 @@ const MyCart = () => {
                           }}
                           className="absolute right-0 top-0 text-red-500"
                         >
-                          <Delete />
+                          <Delete fontSize="small"/>
                         </IconButton>
                       </ToggleButton>
                     );
@@ -455,7 +455,7 @@ const MyCart = () => {
                     />
                   </div>
 
-                  <div className="flex justify-end gap-4 mt-4">
+                  <div className="flex justify-end max-[800px]:flex-col gap-4 mt-4">
                     <Button
                       className="hover:border-red-300 border-red-400 text-red-400"
                       onClick={handleClose}
@@ -487,7 +487,7 @@ const MyCart = () => {
                 return (
                   <div
                     key={i}
-                    className="flex max-[446px]:flex-col justify-between items-start gap-4 hover:text-primary smooth-transition"
+                    className="flex max-[476px]:flex-col justify-between items-start gap-4 hover:text-primary smooth-transition"
                   >
                     <Link href={"/" + slug}>
                       <div className="min-w-[150px] max-[446px]:w-full overflow-hidden rounded-[5px]">
@@ -554,7 +554,7 @@ const MyCart = () => {
 
             <div className="border-2 rounded-[5px] grid gap-2 p-2 mt-4 font-semibold">
               <h2 className="text-xl font-bold"><ReceiptLong className="mr-1"/>Order Summary</h2>
-              <div className="flex justify-between gap-8 items-center">
+              <div className="flex max-sm:flex-col max-sm:gap-1 max-sm:items-start justify-between gap-8 items-center">
                 <p>
                   Total Product : <span>{TotalQuantity} </span>
                   {TotalQuantity > 1 ? 'items' : 'item'}
@@ -582,6 +582,7 @@ const MyCart = () => {
               </Button>
               {/* </form> */}
             </div>
+
           </div>
         </div>
       ) : (
