@@ -72,6 +72,7 @@ const Brand = ({ brand }) => {
             src={"https:" + fields.file.url}
             width={100}
             height={100}
+            alt={title}
             priority
             className="object-contain rounded-md px-4 py-2 border-[1px] border-black mb-4"
           />
