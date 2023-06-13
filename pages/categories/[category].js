@@ -3,13 +3,13 @@ import Image from "next/image";
 import { contentfulClient, client } from "@/cms/contentful";
 import safeJsonStringify from "safe-json-stringify";
 import ProductCard from "@/components/card/productCard";
-import { TextField, InputAdornment } from "@mui/material";
+import { TextField, InputAdornment, Breadcrumbs } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import SortSelect from "@/components/ui/select/sortSelect";
 import Head from "next/head";
 import useSortByCriteria from "@/hooks/useSortByCriteria";
 import SomethingWrong from "../../assets/Something went wrong.svg";
-
+import Link from "next/link";
 export async function getStaticPaths() {
   const product = await contentfulClient("category");
   const paths = product.items.map((item) => {
@@ -42,7 +42,7 @@ export async function getStaticProps({ params }) {
 const Categories = ({ category }) => {
   const [query, setQuery] = useState("");
   const [sortName, setSortName] = useState("");
-  const { categoryBanner, product, title } = category.fields;
+  const { categoryBanner, product, title, slug } = category.fields;
 
   // get filtered products based on user input
   function filtered(arr) {
@@ -72,6 +72,21 @@ const Categories = ({ category }) => {
       />
 
       <main className="main-margin md:translate-y-[-3rem] translate-y-[-0.8rem] bg-white shadow-lg border-2 rounded-[5px]">
+      <Breadcrumbs
+          sx={{
+            mb: 2,
+            "& .MuiBreadcrumbs-li": {
+              "&:hover, &:focus": {
+                color: "primary.main",
+              },
+            },
+            px: "10px"
+          }}
+          >
+            <Link href="/">Home</Link>
+            <Link href="/">Categories</Link>
+            <Link href={`/categories/${slug}`}>{title}</Link>
+          </Breadcrumbs>
         <div className="p-[10px]">
           <div className="flex gap-4 justify-between items-start">
             <TextField
